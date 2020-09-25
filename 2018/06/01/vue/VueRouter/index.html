@@ -326,11 +326,11 @@ methods
 &#125;
 </code></pre></div>
 
-<p><img src="luyou1.png" srcset="/img/loading.gif" alt="image"><br>beforeRouteEnter 守卫 不能 访问 this，因为守卫在导航确认前被调用,因此即将登场的新组件还没被创建。不过，你可以通过传一个回调给 next来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数。</p>
-<p><img src="luyou2.png" srcset="/img/loading.gif" alt="image"></p>
+<p><img src="/images/pages/luyou1.png" srcset="/img/loading.gif" alt="image"><br>beforeRouteEnter 守卫 不能 访问 this，因为守卫在导航确认前被调用,因此即将登场的新组件还没被创建。不过，你可以通过传一个回调给 next来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数。</p>
+<p><img src="/images/pages/luyou2.png" srcset="/img/loading.gif" alt="image"></p>
 <p>注意~ ： beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。</p>
 <p>这个离开守卫beforeRouteLeave()通常用来禁止用户在还未保存修改前突然离开。该导航可以通过 next(false) 来取消。</p>
-<p><img src="luyou3.png" srcset="/img/loading.gif" alt="image"></p>
+<p><img src="/images/pages/luyou3.png" srcset="/img/loading.gif" alt="image"></p>
 <h4 id="完整的导航解析流程："><a href="#完整的导航解析流程：" class="headerlink" title="完整的导航解析流程："></a>完整的导航解析流程：</h4><ol>
 <li><p>导航被触发。</p>
 </li>
@@ -366,7 +366,7 @@ methods
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
+                      <a class="hover-with-bg" href="/categories/%E6%A1%86%E6%9E%B6%E3%80%81%E5%BA%93%E5%AD%A6%E4%B9%A0/">框架、库学习</a>
                     
                   </div>
                 
@@ -385,9 +385,9 @@ methods
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/09/24/vue/Vue%E6%9C%80%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87/">
+                      <a href="/2019/09/25/write-code%20/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E5%8F%8A%E5%BA%94%E7%94%A8/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue最全知识点，面试必备</span>
+                        <span class="hidden-mobile">函数柯里化及应用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -648,6 +648,13 @@ methods
 
 
 
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
 
 
 

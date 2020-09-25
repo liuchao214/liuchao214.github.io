@@ -17,7 +17,7 @@
   <meta name="description" content="个人的成长经历">
   <meta name="author" content="Chaos L">
   <meta name="keywords" content="前端成长笔记">
-  <title>标签 - 手撕代码 - Chaos Blog</title>
+  <title>归档 - Chaos Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -47,7 +47,7 @@
 
 
 <body>
-  <header style="height: 70vh;">
+  <header style="height: 60vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -141,7 +141,7 @@
 </nav>
 
     <div class="banner intro-2" id="background" parallax=true
-         style="background: url('/images/n7a9bv.png') no-repeat center center;
+         style="background: url('/images/73twhs.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -171,19 +171,37 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 1 篇文章</p>
+  <p class="h4">共计 12 篇文章</p>
   <hr>
   
     
       
       <p class="h5">2017</p>
     
-    <a href="/2017/08/21/write-code%20/write-code/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">实现new、bind、instanceOf、deepClone</span>
-      <time style="float: right;">08-21</time>
+    <a href="/2017/06/25/webapck/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">webpack相关问题</span>
+      <time style="float: right;">06-25</time>
+    </a>
+  
+    
+    <a href="/2017/05/07/algorithm/twoSum/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">twoSum [要求 Tc: O(n) Sc:O(n)]</span>
+      <time style="float: right;">05-07</time>
     </a>
   
 </div>
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/archives/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -280,7 +298,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签 - 手撕代码&nbsp;",
+        "汇总&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

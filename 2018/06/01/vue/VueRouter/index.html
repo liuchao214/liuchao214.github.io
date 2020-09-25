@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>VueRouter - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-06-01 21:30" pubdate>
+        2018年6月1日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">VueRouter</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="路由模式"><a href="#路由模式" class="headerlink" title="路由模式"></a>路由模式</h2><ul>
+<li>hash</li>
+<li>history</li>
+</ul>
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p>带＃</p>
+<h3 id="history"><a href="#history" class="headerlink" title="history"></a>history</h3><p>需要server支持</p>
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> User = &#123;
+    template:<span class="hljs-string">&#x27;&lt;div&gt;&#123;&#123;$route.params.id&#125;&#125;&lt;/div&gt;&#x27;</span>
+&#125;
+<span class="hljs-keyword">const</span> router = <span class="hljs-keyword">new</span> VueRouter(&#123;
+    routes:[
+        <span class="hljs-comment">// 动态路径参数 以冒号开头。命中/user/10等格式路由</span>
+        &#123;<span class="hljs-attr">path</span>:<span class="hljs-string">&#x27;/user/:id&#x27;</span>,<span class="hljs-attr">component</span>:User&#125;
+    ]
+&#125;)</code></pre></div>
+<h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span>
+<span class="hljs-keyword">import</span> VueRouter <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue-router&#x27;</span>
+Vue.use(VueRouter)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> VueRouter(&#123;
+ routes: [
+ &#123;
+ path: <span class="hljs-string">&#x27;/&#x27;</span>,
+ name: <span class="hljs-string">&#x27;Navigator&#x27;</span>,
+ component: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-comment">/* webpackChunkName: &quot;navigator&quot; */</span> <span class="hljs-string">&#x27;./../components/Navigator&#x27;</span>)
+ &#125;,
+ &#123;
+ path: <span class="hljs-string">&#x27;/tucao&#x27;</span>,
+ name: <span class="hljs-string">&#x27;Tucao&#x27;</span>,
+ component: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-comment">/* webpackChunkName: &quot;tucao&quot; */</span> <span class="hljs-string">&#x27;./../components/Tucao&#x27;</span>)
+ &#125;
+ ]&#125;)</code></pre></div>
+<h2 id="路由守卫"><a href="#路由守卫" class="headerlink" title="路由守卫"></a>路由守卫</h2><p>路由钩子函数有三种：</p>
+<ol>
+<li><p>全局钩子： beforeEach、 afterEach</p>
+</li>
+<li><p>单个路由里面的钩子： beforeEnter、 beforeLeave</p>
+</li>
+<li><p>组件路由：beforeRouteEnter、 beforeRouteUpdate、 beforeRouteLeave</p>
+</li>
+</ol>
+<h3 id="全局守卫"><a href="#全局守卫" class="headerlink" title="全局守卫"></a>全局守卫</h3><p>无论访问哪一个路径，都会触发全局的钩子函数，位置是调用router的方法</p>
+<p><strong>router.beforeEach() 进入之前触发</strong></p>
+<p><strong>router.afterEach() 进入之后触发</strong></p>
+<h4 id="beforeEach（全局前置守卫）"><a href="#beforeEach（全局前置守卫）" class="headerlink" title="beforeEach（全局前置守卫）"></a>beforeEach（全局前置守卫）</h4><p>使用 router.beforeEach 注册一个全局前置守卫</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> router = <span class="hljs-keyword">new</span> VueRouter(&#123;
+    ...
+&#125;)
+router.beforeEach(<span class="hljs-function">(<span class="hljs-params">to,<span class="hljs-keyword">from</span>,next</span>) =&gt;</span> &#123;
+    <span class="hljs-comment">// do something....   </span>
+&#125;)</code></pre></div>
+<p>每个守卫方法接收三个参数：</p>
+<ul>
+<li>to: Route: 即将要进入的目标路由对象（to是一个对象，是将要进入的路由对象，可以用to.path调用路由对象中的属性）</li>
+<li>from: Route: 当前导航正要离开的路由</li>
+<li>next: Function: 这是一个必须需要调用的方法，执行效果依赖 next 方法的调用参数。</li>
+</ul>
+<h5 id="next参数"><a href="#next参数" class="headerlink" title="next参数"></a>next参数</h5><ul>
+<li>next(): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是confirmed (确认的)。</li>
+<li>next(false): 中断当前的导航。如果浏览器的 URL 改变了 (可能是用户手动或者浏览器后退按 钮)，那么 URL 地址会重置到 from 路由对应的地址。</li>
+<li>next(‘/‘) 或者 next({ path: ‘/‘ }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。你可以向 next 传递任意位置对象，且允许设置诸如 replace: true、name: ‘home’ 之类的选项以及任何用在router-link 的 to prop或router.push中的选项。</li>
+<li>next(error): (2.4.0+) 如果传入 next 的参数是一个 Error 实例，则导航会被终止且该错误会被传递给router.onError()注册过的回调。</li>
+</ul>
+<blockquote>
+<p>确保要调用 next 方法，否则钩子就不会被 resolved。</p>
+</blockquote>
+<h4 id="afterEach（全局后置钩子）"><a href="#afterEach（全局后置钩子）" class="headerlink" title="afterEach（全局后置钩子）"></a>afterEach（全局后置钩子）</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> router = <span class="hljs-keyword">new</span> VueRouter(&#123;
+    ...
+&#125;)
+router.afterEach(<span class="hljs-function">(<span class="hljs-params">to,<span class="hljs-keyword">from</span></span>)=&gt;</span>&#123;
+    <span class="hljs-comment">// do something....   </span>
+&#125;)</code></pre></div>
+<p>和守卫不同的是，这些钩子不会接受 next 函数也不会改变导航本身</p>
+<h4 id="路由独享的守卫-单个路由独享的"><a href="#路由独享的守卫-单个路由独享的" class="headerlink" title="路由独享的守卫(单个路由独享的)"></a>路由独享的守卫(单个路由独享的)</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> VueRouter(&#123;
+    routes: [
+        &#123;
+            path: <span class="hljs-string">&#x27;/&#x27;</span>,
+            name: <span class="hljs-string">&#x27;Navigator&#x27;</span>,
+            beforeEnter:(<span class="hljs-function">(<span class="hljs-params">to,<span class="hljs-keyword">from</span>,next</span>)=&gt;</span>&#123;
+                <span class="hljs-comment">// do something....   </span>
+            &#125;),
+            component: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-comment">/* webpackChunkName: &quot;navigator&quot; */</span> <span class="hljs-string">&#x27;./../components/Navigator&#x27;</span>)
+        &#125;
+    ]
+&#125;)</code></pre></div>
+<h4 id="组件级路由钩子"><a href="#组件级路由钩子" class="headerlink" title="组件级路由钩子"></a>组件级路由钩子</h4><div class="hljs"><pre><code class="hljs stylus">&#123;
+data,
+methods
+<span class="hljs-function"><span class="hljs-title">beforeRouteEnter</span><span class="hljs-params">()</span></span>&#123;
+   <span class="hljs-comment">// this 不指向实例 组件还没创建</span>
+    next((vm) =&gt;&#123;
+        <span class="hljs-comment">// vm就是实例</span>
+    &#125;)
+&#125;
+<span class="hljs-function"><span class="hljs-title">beforeRouteUpdate</span><span class="hljs-params">()</span></span>&#123;
+<span class="hljs-comment">// do something....   </span>
+&#125;
+<span class="hljs-function"><span class="hljs-title">beforeRouteLeave</span><span class="hljs-params">()</span></span>&#123;
+<span class="hljs-comment">// do something....   </span>
+&#125; 
+&#125;
+</code></pre></div>
+
+<p><img src="luyou1.png" srcset="/images/loading.gif" alt="image"><br>beforeRouteEnter 守卫 不能 访问 this，因为守卫在导航确认前被调用,因此即将登场的新组件还没被创建。不过，你可以通过传一个回调给 next来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数。</p>
+<p><img src="luyou2.png" srcset="/images/loading.gif" alt="image"></p>
+<p>注意~ ： beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。</p>
+<p>这个离开守卫beforeRouteLeave()通常用来禁止用户在还未保存修改前突然离开。该导航可以通过 next(false) 来取消。</p>
+<p><img src="luyou3.png" srcset="/images/loading.gif" alt="image"></p>
+<h4 id="完整的导航解析流程："><a href="#完整的导航解析流程：" class="headerlink" title="完整的导航解析流程："></a>完整的导航解析流程：</h4><ol>
+<li><p>导航被触发。</p>
+</li>
+<li><p>在失活的组件里调用离开守卫。</p>
+</li>
+<li><p>调用全局的 beforeEach 守卫。</p>
+</li>
+<li><p>在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。</p>
+</li>
+<li><p>在路由配置里调用 beforeEnter。</p>
+</li>
+<li><p>解析异步路由组件。</p>
+</li>
+<li><p>在被激活的组件里调用 beforeRouteEnter。</p>
+</li>
+<li><p>调用全局的 beforeResolve 守卫 (2.5+)。</p>
+</li>
+<li><p>导航被确认。</p>
+</li>
+<li><p>调用全局的 afterEach 钩子。</p>
+</li>
+<li><p>触发 DOM 更新。</p>
+</li>
+<li><p>用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Vue/">Vue</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/24/vue/Vue%E6%9C%80%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue最全知识点，面试必备</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/03/11/vue/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/">
+                        <span class="hidden-mobile">Vue组件渲染过程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "VueRouter&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

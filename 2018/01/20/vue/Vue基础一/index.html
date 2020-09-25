@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>Vue基础一 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-01-20 00:03" pubdate>
+        2018年1月20日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Vue基础一</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="Vue基础学习笔记"><a href="#Vue基础学习笔记" class="headerlink" title="Vue基础学习笔记"></a>Vue基础学习笔记</h1><h2 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h2><div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>文本插值 &#123;&#123;message&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>JS 表达式 &#123;&#123; flag ? &#x27;yes&#x27; : &#x27;no&#x27; &#125;&#125; （只能是表达式，不能是 js 语句）<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">:id</span>=<span class="hljs-string">&quot;dynamicId&quot;</span>&gt;</span>动态属性 id<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-html</span>=<span class="hljs-string">&quot;rawHtml&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>有 xss 风险<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>【注意】使用 v-html 之后，将会覆盖子元素<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 其他常用指令后面讲 --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>
+<span class="javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span>
+    data() &#123;
+<span class="javascript">        <span class="hljs-keyword">return</span> &#123;</span>
+<span class="javascript">            message: <span class="hljs-string">&#x27;hello vue&#x27;</span>,</span>
+<span class="javascript">            flag: <span class="hljs-literal">true</span>,</span>
+<span class="handlebars"><span class="xml">            rawHtml: &#x27;指令 - 原始 html <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>加粗<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>斜体<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>&#x27;,</span></span>
+<span class="javascript">            dynamicId: <span class="hljs-string">`id-<span class="hljs-subst">$&#123;<span class="hljs-built_in">Date</span>.now()&#125;</span>`</span></span>
+        &#125;
+    &#125;
+&#125;
+<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre></div>
+<h2 id="computed和watch"><a href="#computed和watch" class="headerlink" title="computed和watch"></a>computed和watch</h2><h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>一个计算属性,类似于过滤器,对绑定到view的数据进行处理。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data: &#123;
+        firstName: <span class="hljs-string">&#x27;Foo&#x27;</span>,
+        lastName: <span class="hljs-string">&#x27;Bar&#x27;</span>
+    &#125;,
+    computed: &#123;
+        fullName: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-built_in">this</span>.lastName
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+<p><strong>fullName不可在data里面定义</strong></p>
+<h4 id="get和set用法"><a href="#get和set用法" class="headerlink" title="get和set用法"></a>get和set用法</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data: &#123;
+        firstName: <span class="hljs-string">&#x27;Foo&#x27;</span>,
+        lastName: <span class="hljs-string">&#x27;Bar&#x27;</span>
+    &#125;,
+    computed: &#123;
+        fullName:&#123;
+            get()&#123;<span class="hljs-comment">//回调函数 当需要读取当前属性值是执行，根据相关数据计算并返回当前属性的值</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-built_in">this</span>.lastName
+            &#125;,
+            set(val)&#123;<span class="hljs-comment">//监视当前属性值的变化，当属性值发生变化时执行，更新相关的属性数据</span>
+                <span class="hljs-comment">//val就是fullName的最新属性值</span>
+                <span class="hljs-built_in">console</span>.log(val)
+                <span class="hljs-keyword">const</span> names = val.split(<span class="hljs-string">&#x27; &#x27;</span>);
+                <span class="hljs-built_in">console</span>.log(names)
+                <span class="hljs-built_in">this</span>.firstName = names[<span class="hljs-number">0</span>];
+                <span class="hljs-built_in">this</span>.lastName = names[<span class="hljs-number">1</span>];
+            &#125;
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+
+<p><strong>computed有缓存，data不变则不会重新计算</strong></p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p>watch是一个观察的动作</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data: &#123;
+        firstName: <span class="hljs-string">&#x27;Foo&#x27;</span>,
+        lastName: <span class="hljs-string">&#x27;Bar&#x27;</span>,
+        fullName: <span class="hljs-string">&#x27;Foo Bar&#x27;</span>
+    &#125;,
+    watch: &#123;
+        firstName: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">val</span>) </span>&#123;
+            <span class="hljs-built_in">this</span>.fullName = val + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-built_in">this</span>.lastName
+        &#125;,
+        lastName: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">val</span>) </span>&#123;
+            <span class="hljs-built_in">this</span>.fullName = <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">&#x27; &#x27;</span> + val
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+<h4 id="简单数据类型"><a href="#简单数据类型" class="headerlink" title="简单数据类型"></a>简单数据类型</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data() &#123;
+        <span class="hljs-keyword">return</span>&#123;
+            <span class="hljs-string">&#x27;first&#x27;</span>:<span class="hljs-number">2</span>
+        &#125;
+    &#125;,
+    watch: &#123;
+        first()&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.first)
+        &#125;
+    &#125;,
+&#125;</code></pre></div>
+<h4 id="复杂数据类型"><a href="#复杂数据类型" class="headerlink" title="复杂数据类型"></a>复杂数据类型</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data()&#123;
+        <span class="hljs-keyword">return</span>&#123;
+            <span class="hljs-string">&#x27;first&#x27;</span>:&#123;
+                second:<span class="hljs-number">0</span>
+            &#125;
+        &#125;
+    &#125;,
+    watch:&#123;
+        secondChange:&#123;
+            handler(oldVal,newVal)&#123;
+                <span class="hljs-built_in">console</span>.log(oldVal)
+                <span class="hljs-built_in">console</span>.log(newVal)
+            &#125;,
+            deep:<span class="hljs-literal">true</span>
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+<ul>
+<li><p><strong>console.log打印的结果,发现oldVal和newVal值是一样的,所以深度监听虽然可以监听到对象的变化,但是无法监听到具体对象里面那个属性的变化（只针对引用类型）</strong></p>
+</li>
+<li><p>oldVal和newVal值一样的原因是它们索引同一个对象/数组。Vue <strong>不会保留修改之前值的副本</strong></p>
+</li>
+<li><p>深度监听对应的函数名必须为handler,否则无效果,因为watcher里面对应的是对handler的调用</p>
+</li>
+</ul>
+<h4 id="监听对象单个属性"><a href="#监听对象单个属性" class="headerlink" title="监听对象单个属性"></a>监听对象单个属性</h4><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data() &#123;
+        <span class="hljs-keyword">return</span> &#123;
+            first: &#123;
+                second: <span class="hljs-number">0</span>
+            &#125;
+        &#125;;
+    &#125;,
+    watch: &#123;
+        <span class="hljs-string">&quot;first.second&quot;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">newVal, oldVal</span>) </span>&#123;
+            <span class="hljs-built_in">console</span>.log(newVal, oldVal);
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>用computed作为中间件转化,因为computed可以取到对应的属性值</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+    data() &#123;
+        <span class="hljs-keyword">return</span> &#123;
+            first: &#123;
+                second: <span class="hljs-number">0</span>
+                &#125;
+            &#125;;
+    &#125;,
+    computed: &#123;
+        secondChange() &#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.first.second;
+        &#125;
+    &#125;,
+    watch: &#123;
+        secondChange() &#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;second属性值变化了&quot;</span>);
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+
+<h3 id="computed和watch的区别"><a href="#computed和watch的区别" class="headerlink" title="computed和watch的区别"></a>computed和watch的区别</h3><h4 id="computed特性"><a href="#computed特性" class="headerlink" title="computed特性"></a>computed特性</h4><ol>
+<li>是计算值</li>
+<li>应用：就是简化tempalte里面双花括号计算和处理props或$emit的传值</li>
+<li>具有缓存性，页面重新渲染值不变化,计算属性会立即返回之前的计算结果，而不必再次执行函数</li>
+</ol>
+<h4 id="watch特性"><a href="#watch特性" class="headerlink" title="watch特性"></a>watch特性</h4><ol>
+<li>是观察的动作</li>
+<li>应用：监听props，$emit或本组件的值执行异步操作</li>
+<li>无缓存性，页面重新渲染时值不变化也会执行</li>
+</ol>
+<h2 id="class和style"><a href="#class和style" class="headerlink" title="class和style"></a>class和style</h2><ul>
+<li>使用动态属性</li>
+<li>使用驼峰式写法</li>
+</ul>
+<div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;&#123; black: isBlack, yellow: isYellow &#125;&quot;</span>&gt;</span>使用 class<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[black, yellow]&quot;</span>&gt;</span>使用 class （数组）<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;styleData&quot;</span>&gt;</span>使用 style<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>
+<span class="javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span>
+    data() &#123;
+<span class="javascript">        <span class="hljs-keyword">return</span> &#123;</span>
+<span class="javascript">            isBlack: <span class="hljs-literal">true</span>,</span>
+<span class="javascript">            isYellow: <span class="hljs-literal">true</span>,</span>
+
+<span class="javascript">            black: <span class="hljs-string">&#x27;black&#x27;</span>,</span>
+<span class="javascript">            yellow: <span class="hljs-string">&#x27;yellow&#x27;</span>,</span>
+
+            styleData: &#123;
+<span class="javascript">                fontSize: <span class="hljs-string">&#x27;40px&#x27;</span>, <span class="hljs-comment">// 转换为驼峰式</span></span>
+<span class="javascript">                color: <span class="hljs-string">&#x27;red&#x27;</span>,</span>
+<span class="javascript">                backgroundColor: <span class="hljs-string">&#x27;#ccc&#x27;</span> <span class="hljs-comment">// 转换为驼峰式</span></span>
+            &#125;
+        &#125;
+    &#125;
+&#125;
+<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span>
+<span class="css">    <span class="hljs-selector-class">.black</span> &#123;</span>
+<span class="css">        <span class="hljs-selector-tag">background-color</span>: <span class="hljs-selector-id">#999</span>;</span>
+    &#125;
+<span class="css">    <span class="hljs-selector-class">.yellow</span> &#123;</span>
+        color: yellow;
+    &#125;
+<span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></code></pre></div>
+
+<h2 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h2><div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;type === &#x27;a&#x27;&quot;</span>&gt;</span>A<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;type === &#x27;b&#x27;&quot;</span>&gt;</span>B<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-else</span>&gt;</span>other<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;type === &#x27;a&#x27;&quot;</span>&gt;</span>A by v-show<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;type === &#x27;b&#x27;&quot;</span>&gt;</span>B by v-show<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>
+<span class="javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span>
+    data() &#123;
+<span class="javascript">        <span class="hljs-keyword">return</span> &#123;</span>
+<span class="javascript">            type: <span class="hljs-string">&#x27;a&#x27;</span></span>
+        &#125;
+    &#125;
+&#125;
+<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></div>
+
+<h4 id="v-if和v-show"><a href="#v-if和v-show" class="headerlink" title="v-if和v-show"></a>v-if和v-show</h4><ul>
+<li>v-if是false时候不会渲染dom，v-show则是display:none</li>
+<li>频繁切换使用v-show,不会频繁渲染dom</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Vue/">Vue</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/01/22/vue/Vue%E5%9F%BA%E7%A1%80%E4%BA%8C/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue基础二</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/09/algorithm/RainbowSort/">
+                        <span class="hidden-mobile">RainbowSort [要求 Tc: O(n) Sc:O(1)]</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Vue基础一&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

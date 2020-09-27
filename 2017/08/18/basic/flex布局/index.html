@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>flex布局 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-08-18 16:21" pubdate>
+        2017年8月18日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">flex布局</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <p>现在让我们深入了解 Flexbox 的缩放 – 以及如何利用它来构建漂亮的自适应布局。</p>
+<a id="more"></a>
+<h3 id="属性-1-Flex-Basis"><a href="#属性-1-Flex-Basis" class="headerlink" title="属性 #1: Flex-Basis"></a>属性 #1: Flex-Basis</h3><p>在上一篇文章中，我们主要了解了适用于容器元素的属性。这一次，我们专门介绍如何控制子元素 (flex 项) 的大小。</p>
+<p>我想，我们这次介绍的第一个属性是 Flexbox 教程中最不好解释的属性之一。</p>
+<p>但 – 不要担心。 它实际上很简单。</p>
+<p><code>flex-basis</code> 控制一个子元素 (flex 项) 的默认大小，但是它可以被其他的 Flexbox 属性影响（稍后详细介绍）。</p>
+<p>在下面的 GIF 中，你会发现它可以与 <code>width</code> 属性互换（等价）：</p>
+<p><img src="/images/pages/IM2.gif" srcset="/img/loading.gif" alt="image"></p>
+<p>然而，flex-basis 和 width 有什么不同呢？<code>flex-basis</code> 对应于 flex 轴线而言的：</p>
+<p><img src="/images/pages/IM3.png" srcset="/img/loading.gif" alt="image"></p>
+<p>flex-basis 影响元素在主轴 (main axis) 上的大小。</p>
+<p>让我们看看当保持 flex-basis 不变的情况下，改变主轴方向，会发生什么。</p>
+<p><img src="/images/pages/IM4.gif" srcset="/img/loading.gif" alt="image"></p>
+<p>注意，我们必须从手动将 <code>height</code> 切换到设置 <code>width</code> 属性。 因此，<code>flex-basis</code> 是根据 <code>flex-direction</code> 的不同来确定 <code>width</code> 或 <code>height</code> 的。</p>
+<h3 id="属性-2-Flex-Grow（拉伸）"><a href="#属性-2-Flex-Grow（拉伸）" class="headerlink" title="属性 #2: Flex Grow（拉伸）"></a>属性 #2: Flex Grow（拉伸）</h3><p>现在我们要更复杂一点了。</p>
+<p>首先，让我们将所有的矩形子元素 (flex 项) 设置为相同的<code>width</code>，120px：</p>
+<p><img src="/images/pages/IM5.png" srcset="/img/loading.gif" alt="image"></p>
+<p>现在，涉及到名为 <code>flex-grow</code> 的属性，其默认值为 <code>0</code> 。这意味着矩形子元素 (flex 项) 不允许自动占据容器中剩余的空间。</p>
+<p>这意味着什么呢？好吧，让我们尝试把为每个矩形子元素 (flex 项) 的<code>flex-grow</code>设置为<code>1</code>：</p>
+<p><img src="/images/pages/IMG6.png" srcset="/img/loading.gif" alt="image"></p>
+<p>所有矩形子元素 (flex 项) 共同占据了整个容器的宽度，它们之间的间隔也都是均匀分布。<code>flex-grow</code> 值覆盖了 <code>width</code> 值。</p>
+<p>然而，关于 <code>flex-grow</code> 令人困惑的是其值实际上意味着什么呢？<code>flex-grow: 1</code>是什么意思呢？</p>
+<p>嗯，如果设置每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 属性值为 <code>999</code> ，让我们来看一下效果：</p>
+<p><img src="/images/pages/IMG7.png" srcset="/img/loading.gif" alt="image"></p>
+<p>正如你所看到的，完全一样。</p>
+<p>这是因为 <code>flex-grow</code> 不是绝对值 – 它是一个相对值。</p>
+<p>对于每个矩形子元素 (flex 项) 来说，重要的不是其 <code>flex-grow</code> 值有多大，而是这个值与其他矩形子元素 (flex 项) 的 <code>flex-grow</code> 值相比较，相对值有多大。</p>
+<p>如果我们将每个矩形子元素 (flex 项) 设置为<code>flex-grow: 1</code>，然后调整第 3 个矩形子元素的<code>flex-grow</code>值，那么我们可以看到改变，如图：</p>
+<p><img src="/images/pages/IMG8.gif" srcset="/img/loading.gif" alt="image"></p>
+<p>要真正理解这里到底发生了什么，让我们快速过一边简单的数学知识。</p>
+<p>每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 初始值都是 <code>1</code>。如果我们将每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 相加起来，总和为 <code>6</code>。因此容器的总宽度被平均分成了 6 份。每个矩形子元素 (flex 项) 增长到填充容器可用空间的 1/6。</p>
+<p>当我们将第 3 个矩形子元素的 <code>flex-grow</code> 设置为 <code>2</code> 时，容器现在被分成了 7 等份，因为所有 <code>flex-grow</code> 属性是：1 + 1 + 2 + 1 + 1 + 1。</p>
+<p>第 3 个矩形子元素占了整个容器空间的 2/7，其他的占了 1/7。</p>
+<p>同理，当设置第 3 个矩形子元素的 <code>flex-grow: 3</code> 的时候，整个容器宽度被分成了 8 等份（1 + 1 + 3 + 1 + 1 + 1），第 3 个矩形子元素占了 3/8，其他的占了 1/8。</p>
+<p>以此类推。</p>
+<p><code>flex-grow</code> 只和比例相关，如果我们设置第 3 个矩形子元素 <code>flex-grow: 12</code>，其余每个方块的 <code>flex-grow: 4</code>；跟第三个设置成 3，其他的设置成 1 得到同样的效果，见下图：</p>
+<p><img src="/images/pages/IMG9.png" srcset="/img/loading.gif" alt="image"></p>
+<p>重要的是每个矩形子元素的 <code>flex-grow</code> 与其他矩形子元素成比例的。</p>
+<p>最后一点，请记住，就像 <code>flex-basis</code> 一样，<code>flex-grow</code> 只适用于主轴 (main axis)。我们的矩形子元素只会影响宽度，除非我们将 <code>flex-direction</code>设置为<code>column</code>。</p>
+<h3 id="属性-3-Flex-Shrink（收缩）"><a href="#属性-3-Flex-Shrink（收缩）" class="headerlink" title="属性 #3: Flex Shrink（收缩）"></a>属性 #3: Flex Shrink（收缩）</h3><p><code>flex-shrink</code> 正好和 <code>flex-grow</code> 相反，它是决定矩形子元素允许收缩多少的。</p>
+<p>它的主要用途是指定哪些 flex 项 要缩小，哪些 flex 项 不要缩小。默认情况下，每个矩形子元素 (flex 项) 都为 <code>1</code> – 这意味着每个矩形子元素将随着容器收缩而收缩。</p>
+<p>让我们看看实际情况。 在下面的 GIF 中，每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 为<code>1</code>，所以他们填充满了整个容器，并且<code>flex-shrink</code> 为 <code>1</code>，所以他们被允许收缩。</p>
+<p><img src="/images/pages/IMG10.gif" srcset="/img/loading.gif" alt="image"></p>
+<p>现在让我们将第 3 个矩形子元素的 <code>flex-shrink</code> 设置为 <code>0</code> 。它是禁止收缩，所以它会随着容器拉伸而拉伸，但是当容器收缩的时候，当其宽度收缩至设置的 120px 时，它不再允许收缩。</p>
+<p><img src="/images/pages/IMG11.gif" srcset="/img/loading.gif" alt="image"></p>
+<p><code>flex-shrink</code> 的默认值是 <code>1</code> – 这意味着你的元素默认允许收缩，除非你告诉他们不允许收缩！</p>
+<p>同样， <code>flex-shrink</code> 约为比例。如果一个矩形子元素的 <code>flex-shrink</code> 为 <code>6</code>，并且其余<code>flex-shrink</code> 为 <code>2</code>，那么这个矩形子元素随着容器空间的收缩，将以 3 倍于其他矩形子元素的速度缩小。</p>
+<p>注意这里的措辞：3x（3 倍）<code>flex-shrink</code>的矩形子元素将缩小 3 倍。这并不是收缩 1/3 的宽度。</p>
+<p>稍后，我们将深入了解元素是如何收缩和拉伸的。但首先，让我们了解最后一个属性，把这些东西都串起来。</p>
+<h3 id="属性-4-Flex"><a href="#属性-4-Flex" class="headerlink" title="属性 #4: Flex"></a>属性 #4: Flex</h3><p><code>flex</code> 是 <code>flex-grow</code>，<code>flex-shrink</code> 和 <code>flex-basis</code> 的缩写 – 所有这些都放在一起。</p>
+<p>它的默认值是<code>0</code>（grow），<code>1</code>（shrink）和 <code>auto</code>（basis）。</p>
+<p>我们把上一个例子简化成只有两个矩形子元素 (flex 项)。</p>
+<p>下面是它们的属性：</p>
+<p>CSS 代码:</p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-class">.square</span><span class="hljs-selector-id">#one</span> &#123;
+  <span class="hljs-attribute">flex</span>: <span class="hljs-number">2</span> <span class="hljs-number">1</span> <span class="hljs-number">300px</span>;
+&#125;
+<span class="hljs-selector-class">.square</span><span class="hljs-selector-id">#two</span> &#123;
+  <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">300px</span>;
+&#125;</code></pre></div>
+
+<p>两个矩形子元素 (flex 项) 具有着相同的 <code>flex-basis</code>。这意味着如果它们有足够的空间（容器的空间是 600px 加上 <code>margin</code> 和 <code>padding</code> ），它们的宽度都是 300px 。</p>
+<p>但随着容器的拉伸，第 1 个矩形子元素 (flex 项)（具有更高的 <code>flex-grow</code> ）将以两倍于第 2 个矩形子元素的速度增长。 随着容器的收缩，第 2 个矩形子元素（具有更高的柔性收缩）将会以两倍于第 1 个矩形子元素的的速度收缩。</p>
+<p>实际效果如下图：</p>
+<p><img src="/images/pages/IMG12.gif" srcset="/img/loading.gif" alt="image"></p>
+<h4 id="flex-项如何收缩和拉伸"><a href="#flex-项如何收缩和拉伸" class="headerlink" title="flex 项如何收缩和拉伸"></a>flex 项如何收缩和拉伸</h4><p>这里有什么可能会混淆：当第 1 个矩形子元素拉伸时，并没有拉伸到第 2 个矩形子元素的两倍大小。同样，当第 2 个矩形子元素缩小时，它不缩小到第 1 个矩形子元素的一半大小 – 即使<code>flex-shrink</code>(理解为收缩比率) 为<code>2</code>比<code>1</code>。</p>
+<p>这两个属性并不是说它们的大小比例是 <code>2:1</code> 或者 <code>1:2</code>，而是说它们的收缩或拉伸速度的比率。</p>
+<h4 id="简单的数学计算"><a href="#简单的数学计算" class="headerlink" title="简单的数学计算"></a>简单的数学计算</h4><p>容器的初始大小为 640px 。在容器的每一边占用 20px 的 <code>padding</code> ，剩下的空间足够让两个矩形子元素满足 <code>flex-basis</code> 等于 300px。</p>
+<p>当容器设置为 430px 时，空间收缩了 210px 。(注：两个矩形子元素的 <code>flex-shrink</code> 加起来为 <code>3</code> ，那么， ) 第 1 个矩形子元素的 <code>flex-shrink</code> 为 <code>1</code>, 也就是收缩了 70px 。 第 2 个矩形子元素的 <code>flex-shrink</code> 为 <code>1</code> 也就是收缩了 140px 。</p>
+<p>当容器收缩到 340px 时，空间收缩了 300px。第 1 个矩形子元素的收缩了 100px，第 2 个矩形子元素的收缩了 200px 。</p>
+<p>容器收缩的空间根据它们各自的 <code>flex-shrink</code> 收缩率（2:1）的比率来分割。</p>
+<p>这对于 <code>flex-grow</code> 也是同样的。 当容器拉伸到 940px 时，也就是说空间拉伸 300px ，第 1 个矩形子元素被拉伸 200px ，，第 2 个矩形子元素被拉伸 100px 。</p>
+<p>当涉及到 flex 属性时，其实它们说的都是比例。</p>
+<p><img src="/images/pages/IMG13.gif" srcset="/img/loading.gif" alt="image"></p>
+<p>在上面的 GIF 中，您可以看到宽度是如何根据比率进行调整的，增量（Δ）显示与 <code>flex-basis</code> 相比的差异。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>作为最后的总结：<code>flex-basis</code> 是控制元素在发生缩放之前，沿着主轴方向的大小。<code>flex-grow</code> 指的是在元素拉伸时，和兄弟元素之间相比的拉伸比例。而 <code>flex-shrink</code> 指的是在元素收缩时，和兄弟元素之间相比的收缩比例。</p>
+<p>我们还有更多的 Flexbox 属性要介绍 – 在接下来的几周里请密切关注。</p>
+<p>非常感谢阅读！ 如果你有一些特定的概念（ Flexbox 或其他），你想看到在类似的文章中解释，请留言。</p>
+<p>原文地址：<a target="_blank" rel="noopener" href="https://medium.freecodecamp.com/even-more-about-how-flexbox-works-explained-in-big-colorful-animated-gifs-a5a74812b053#.9hknw1qpd">https://medium.freecodecamp.com/even-more-about-how-flexbox-works-explained-in-big-colorful-animated-gifs-a5a74812b053#.9hknw1qpd</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/css/">css</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/08/21/write-code%20/%E5%AE%9E%E7%8E%B0new%E3%80%81bind%E3%80%81instanceOf%E3%80%81deepClone/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">实现new、bind、instanceOf、deepClone</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/06/25/webapck/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">webpack相关问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  
+<script src="/custom/custom.js"></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "flex布局&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>

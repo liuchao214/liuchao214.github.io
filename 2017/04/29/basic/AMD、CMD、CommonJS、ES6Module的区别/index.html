@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>AMD、CMD、CommonJS、ES6Module的区别 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-04-29 19:22" pubdate>
+        2017年4月29日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">AMD、CMD、CommonJS、ES6Module的区别</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>回想起之前的一次面试，第一轮面试官问我 AMD 和 CMD 的区别，我只回答说 AMD 是提前加载，CMD 是按需加载。第二轮面试官又问了我 CommonJS 和 ES6 Module 的区别，emmm…，我大致回答说新的比旧的好~~，虽然面试官并没有说什么，不过显然这样的答案并不是有助于面试、有助于自己的技术积累的。</p>
+<p>所以有必要进行一次梳理，以便更清晰地了解它们的特点及差异。</p>
+<a id="more"></a>
+<h3 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h3><p>AMD 一开始是 CommonJS 规范中的一个草案，全称是 Asynchronous Module Definition，即异步模块加载机制。后来由该草案的作者以 RequireJS 实现了 AMD 规范，所以一般说 AMD 也是指 RequireJS。</p>
+<h4 id="RequireJS-的基本用法"><a href="#RequireJS-的基本用法" class="headerlink" title="RequireJS 的基本用法"></a>RequireJS 的基本用法</h4><p>通过<code>define</code>来定义一个模块，使用<code>require</code>可以导入定义的模块。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">//a.js</span>
+<span class="hljs-comment">//define可以传入三个参数，分别是字符串-模块名、数组-依赖模块、函数-回调函数</span>
+define(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+&#125;)
+
+<span class="hljs-comment">// b.js</span>
+<span class="hljs-comment">//数组中声明需要加载的模块，可以是模块名、js文件路径</span>
+<span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a</span>)</span>&#123;
+    <span class="hljs-built_in">console</span>.log(a);<span class="hljs-comment">// 1</span>
+&#125;);
+复制代码</code></pre></div>
+
+<h4 id="RequireJS-的特点"><a href="#RequireJS-的特点" class="headerlink" title="RequireJS 的特点"></a>RequireJS 的特点</h4><p>对于依赖的模块，AMD 推崇<strong>依赖前置，提前执行</strong>。也就是说，在<code>define</code>方法里传入的依赖模块 (数组)，会在一开始就下载并执行。</p>
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><p>CMD 是 SeaJS 在推广过程中生产的对模块定义的规范，在 Web 浏览器端的模块加载器中，SeaJS 与 RequireJS 并称，SeaJS 作者为阿里的玉伯。</p>
+<h4 id="SeaJS-的基本用法"><a href="#SeaJS-的基本用法" class="headerlink" title="SeaJS 的基本用法"></a>SeaJS 的基本用法</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">//a.js</span>
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment">* define 接受 factory 参数，factory 可以是一个函数，也可以是一个对象或字符串，</span>
+<span class="hljs-comment">* factory 为对象、字符串时，表示模块的接口就是该对象、字符串。</span>
+<span class="hljs-comment">* define 也可以接受两个以上参数。字符串 id 表示模块标识，数组 deps 是模块依赖.</span>
+<span class="hljs-comment">*/</span>
+define(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">require, exports, module</span>) </span>&#123;
+  <span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;jquery&#x27;</span>);
+
+  <span class="hljs-built_in">exports</span>.setColor = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;
+    $(<span class="hljs-string">&#x27;body&#x27;</span>).css(<span class="hljs-string">&#x27;color&#x27;</span>,<span class="hljs-string">&#x27;#333&#x27;</span>);
+  &#125;;
+&#125;);
+
+<span class="hljs-comment">//b.js</span>
+<span class="hljs-comment">//数组中声明需要加载的模块，可以是模块名、js文件路径</span>
+seajs.use([<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a</span>) </span>&#123;
+  $(<span class="hljs-string">&#x27;#el&#x27;</span>).click(a.setColor);
+&#125;);
+复制代码</code></pre></div>
+
+<h4 id="SeaJS-的特点"><a href="#SeaJS-的特点" class="headerlink" title="SeaJS 的特点"></a>SeaJS 的特点</h4><p>对于依赖的模块，CMD 推崇<strong>依赖就近，延迟执行</strong>。也就是说，只有到<code>require</code>时依赖模块才执行。</p>
+<h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><p>CommonJS 规范为 CommonJS 小组所提出，目的是弥补 JavaScript 在服务器端缺少模块化机制，NodeJS、webpack 都是基于该规范来实现的。</p>
+<h4 id="CommonJS-的基本用法"><a href="#CommonJS-的基本用法" class="headerlink" title="CommonJS 的基本用法"></a>CommonJS 的基本用法</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">//a.js</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;hello world&quot;</span>)
+&#125;
+
+<span class="hljs-comment">//b.js</span>
+<span class="hljs-keyword">var</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>);
+
+a();<span class="hljs-comment">//&quot;hello world&quot;</span>
+
+<span class="hljs-comment">//或者</span>
+
+<span class="hljs-comment">//a2.js</span>
+<span class="hljs-built_in">exports</span>.num = <span class="hljs-number">1</span>;
+<span class="hljs-built_in">exports</span>.obj = &#123;<span class="hljs-attr">xx</span>: <span class="hljs-number">2</span>&#125;;
+
+<span class="hljs-comment">//b2.js</span>
+<span class="hljs-keyword">var</span> a2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a2&#x27;</span>);
+
+<span class="hljs-built_in">console</span>.log(a2);<span class="hljs-comment">//&#123; num: 1, obj: &#123; xx: 2 &#125; &#125;</span>
+复制代码</code></pre></div>
+
+<h4 id="CommonJS-的特点"><a href="#CommonJS-的特点" class="headerlink" title="CommonJS 的特点"></a>CommonJS 的特点</h4><ul>
+<li>所有代码都运行在模块作用域，不会污染全局作用域；</li>
+<li>模块是同步加载的，即只有加载完成，才能执行后面的操作；</li>
+<li>模块在首次执行后就会缓存，再次加载只返回缓存结果，如果想要再次执行，可清除缓存；</li>
+<li>CommonJS 输出是值的拷贝 (即，<code>require</code>返回的值是被输出的值的拷贝，模块内部的变化也不会影响这个值)。</li>
+</ul>
+<h3 id="ES6-Module"><a href="#ES6-Module" class="headerlink" title="ES6 Module"></a>ES6 Module</h3><p>ES6 Module 是 ES6 中规定的模块体系，相比上面提到的规范， ES6 Module 有更多的优势，有望成为浏览器和服务器通用的模块解决方案。</p>
+<h4 id="ES6-Module-的基本用法"><a href="#ES6-Module-的基本用法" class="headerlink" title="ES6 Module 的基本用法"></a>ES6 Module 的基本用法</h4><div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">//a.js</span>
+<span class="hljs-keyword">var</span> name = <span class="hljs-string">&#x27;lin&#x27;</span>;
+<span class="hljs-keyword">var</span> age = <span class="hljs-number">13</span>;
+<span class="hljs-keyword">var</span> job = <span class="hljs-string">&#x27;ninja&#x27;</span>;
+
+<span class="hljs-keyword">export</span> &#123; name, age, job&#125;;
+
+<span class="hljs-comment">//b.js</span>
+<span class="hljs-keyword">import</span> &#123; name, age, job&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a.js&#x27;</span>;
+
+<span class="hljs-built_in">console</span>.log(name, age, job);<span class="hljs-comment">// lin 13 ninja</span>
+
+<span class="hljs-comment">//或者</span>
+
+<span class="hljs-comment">//a2.js</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;default &#x27;</span>);
+&#125;
+
+<span class="hljs-comment">//b2.js</span>
+<span class="hljs-keyword">import</span> customName <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a2.js&#x27;</span>;
+customName(); <span class="hljs-comment">// &#x27;default&#x27;</span>
+复制代码</code></pre></div>
+
+<h4 id="ES6-Module-的特点-对比-CommonJS"><a href="#ES6-Module-的特点-对比-CommonJS" class="headerlink" title="ES6 Module 的特点 (对比 CommonJS)"></a>ES6 Module 的特点 (对比 CommonJS)</h4><ul>
+<li>CommonJS 模块是运行时加载，ES6 Module 是编译时输出接口；</li>
+<li>CommonJS 加载的是整个模块，将所有的接口全部加载进来，ES6 Module 可以单独加载其中的某个接口；</li>
+<li>CommonJS 输出是值的拷贝，ES6 Module 输出的是值的引用，被输出模块的内部的改变会影响引用的改变；</li>
+<li>CommonJS <code>this</code>指向当前模块，ES6 Module <code>this</code>指向<code>undefined</code>;</li>
+</ul>
+<p>目前浏览器对 ES6 Module 兼容还不太好，我们平时在 webpack 中使用的<code>export</code>/<code>import</code>，会被打包为<code>exports</code>/<code>require</code>。</p>
+<h3 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h3><p>这里比较宽泛地把 JavaScript 中的几大模块化规范列举出来，希望借此对 JavaScript 模块化有大致的认识，而未对细节展开具体分析，感兴趣的可以自行探索。</p>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://juejin.im/post/5db95e3a6fb9a020704bcd8d">https://juejin.im/post/5db95e3a6fb9a020704bcd8d</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/05/07/algorithm/twoSum/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">twoSum</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  
+<script src="/custom/custom.js"></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "AMD、CMD、CommonJS、ES6Module的区别&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>

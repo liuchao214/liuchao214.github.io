@@ -1,0 +1,769 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>for循环全家桶 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-06-15 17:07" pubdate>
+        2020年6月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">for循环全家桶</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <p>抵达战场的 5 方势力分别是<code>for</code> , <code>foreach</code> , <code>map</code> , <code>for...in</code> , <code>for...of</code></p>
+<h2 id="自我介绍环节"><a href="#自我介绍环节" class="headerlink" title="自我介绍环节"></a>自我介绍环节</h2><a id="more"></a>
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><p>我是遍历界最早出现的一方诸侯，在座的各位需称我一声爷爷。我能满足开发人员的绝大多数的需求。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// 遍历数组</span>
+<span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>];
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i &lt; arr.length;i++)&#123;
+    <span class="hljs-built_in">console</span>.log(i)          <span class="hljs-comment">// 索引，数组下标</span>
+    <span class="hljs-built_in">console</span>.log(arr[i])     <span class="hljs-comment">// 数组下标所对应的元素</span>
+&#125;
+
+<span class="hljs-comment">// 遍历对象</span>
+<span class="hljs-keyword">let</span> profile = &#123;<span class="hljs-attr">name</span>:<span class="hljs-string">&quot;April&quot;</span>,<span class="hljs-attr">nickname</span>:<span class="hljs-string">&quot;二十七刻&quot;</span>,<span class="hljs-attr">country</span>:<span class="hljs-string">&quot;China&quot;</span>&#125;;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>, keys=<span class="hljs-built_in">Object</span>.keys(profile); i &lt; keys.length;i++)&#123;
+    <span class="hljs-built_in">console</span>.log(keys[i])            <span class="hljs-comment">// 对象的键值</span>
+    <span class="hljs-built_in">console</span>.log(profile[keys[i]])   <span class="hljs-comment">// 对象的键对应的值</span>
+&#125;
+
+<span class="hljs-comment">// 遍历字符串</span>
+<span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;abcdef&quot;</span>;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i &lt; str.length ;i++)&#123;
+    <span class="hljs-built_in">console</span>.log(i)          <span class="hljs-comment">// 索引 字符串的下标</span>
+    <span class="hljs-built_in">console</span>.log(str[i])     <span class="hljs-comment">// 字符串下标所对应的元素</span>
+&#125;
+
+<span class="hljs-comment">// 遍历DOM 节点</span>
+<span class="hljs-keyword">let</span> articleParagraphs = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">&#x27;.article &gt; p&#x27;</span>);
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i&lt;articleParagraphs.length;i++)&#123;
+    articleParagraphs[i].classList.add(<span class="hljs-string">&quot;paragraph&quot;</span>);
+    <span class="hljs-comment">// 给class名为“article”节点下的 p 标签添加一个名为“paragraph” class属性。</span>
+&#125;</code></pre></div>
+
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><p>我是 ES5 版本发布的。按升序为数组中含有效值的每一项执行一次 callback 函数，那些已删除或者未初始化的项将被跳过（例如在稀疏数组上）。我是 for 循环的加强版。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// 遍历数组</span>
+<span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>];
+arr.forEach(<span class="hljs-function"><span class="hljs-params">i</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(i))
+
+<span class="hljs-comment">// logs 1</span>
+<span class="hljs-comment">// logs 2</span>
+<span class="hljs-comment">// logs 3</span>
+<span class="hljs-comment">// 直接输出了数组的元素</span>
+
+<span class="hljs-comment">//遍历对象</span>
+<span class="hljs-keyword">let</span> profile = &#123;<span class="hljs-attr">name</span>:<span class="hljs-string">&quot;April&quot;</span>,<span class="hljs-attr">nickname</span>:<span class="hljs-string">&quot;二十七刻&quot;</span>,<span class="hljs-attr">country</span>:<span class="hljs-string">&quot;China&quot;</span>&#125;;
+<span class="hljs-keyword">let</span> keys = <span class="hljs-built_in">Object</span>.keys(profile);
+keys.forEach(<span class="hljs-function"><span class="hljs-params">i</span> =&gt;</span> &#123;
+    <span class="hljs-built_in">console</span>.log(i)              <span class="hljs-comment">// 对象的键值</span>
+    <span class="hljs-built_in">console</span>.log(profile[i])     <span class="hljs-comment">// 对象的键对应的值</span>
+&#125;)</code></pre></div>
+
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>我也是 ES5 版本发布的，我可以创建一个新数组，新数组的结果是原数组中的每个元素都调用一次提供的函数后的返回值。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>];
+<span class="hljs-keyword">let</span> res = arr.map(<span class="hljs-function"><span class="hljs-params">i</span> =&gt;</span> i * i);
+
+<span class="hljs-built_in">console</span>.log(res) <span class="hljs-comment">// logs [1, 4, 9, 16, 25]</span></code></pre></div>
+
+<h3 id="for…in-枚举"><a href="#for…in-枚举" class="headerlink" title="for…in 枚举"></a>for…in 枚举</h3><p>我是 ES5 版本发布的。以任意顺序遍历一个对象的除 Symbol 以外的可枚举属性。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// 遍历对象</span>
+<span class="hljs-keyword">let</span> profile = &#123;<span class="hljs-attr">name</span>:<span class="hljs-string">&quot;April&quot;</span>,<span class="hljs-attr">nickname</span>:<span class="hljs-string">&quot;二十七刻&quot;</span>,<span class="hljs-attr">country</span>:<span class="hljs-string">&quot;China&quot;</span>&#125;;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">in</span> profile)&#123;
+    <span class="hljs-keyword">let</span> item = profile[i];
+    <span class="hljs-built_in">console</span>.log(item)   <span class="hljs-comment">// 对象的键值</span>
+    <span class="hljs-built_in">console</span>.log(i)      <span class="hljs-comment">// 对象的键对应的值</span>
+&#125;
+<span class="hljs-comment">// 遍历数组</span>
+<span class="hljs-keyword">let</span> arr = [<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>];
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">in</span> arr)&#123;
+    <span class="hljs-keyword">let</span> item = arr[i];
+    <span class="hljs-built_in">console</span>.log(item)   <span class="hljs-comment">// 数组下标所对应的元素</span>
+    <span class="hljs-built_in">console</span>.log(i)      <span class="hljs-comment">// 索引，数组下标</span>
+&#125;
+<span class="hljs-comment">// 遍历字符串</span>
+<span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;abcd&quot;</span>
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">in</span> str)&#123;
+    <span class="hljs-keyword">let</span> item = str[i];
+    <span class="hljs-built_in">console</span>.log(item)   <span class="hljs-comment">// 字符串下标所对应的元素</span>
+    <span class="hljs-built_in">console</span>.log(i)      <span class="hljs-comment">// 索引 字符串的下标</span>
+&#125;</code></pre></div>
+
+<h3 id="for…of-迭代"><a href="#for…of-迭代" class="headerlink" title="for…of 迭代"></a>for…of 迭代</h3><p>我是 ES6 版本发布的。在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// 迭代数组数组</span>
+<span class="hljs-keyword">let</span> arr = [<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>];
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> item <span class="hljs-keyword">of</span> arr)&#123;
+    <span class="hljs-built_in">console</span>.log(item)     
+&#125;
+<span class="hljs-comment">// logs &#x27;a&#x27;</span>
+<span class="hljs-comment">// logs &#x27;b&#x27;</span>
+<span class="hljs-comment">// logs &#x27;c&#x27;</span>
+
+<span class="hljs-comment">// 迭代字符串</span>
+<span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;abc&quot;</span>;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> value <span class="hljs-keyword">of</span> str) &#123;
+    <span class="hljs-built_in">console</span>.log(value);
+&#125;
+<span class="hljs-comment">// logs &#x27;a&#x27;</span>
+<span class="hljs-comment">// logs &#x27;b&#x27;</span>
+<span class="hljs-comment">// logs &#x27;c&#x27;</span>
+
+<span class="hljs-comment">// 迭代map</span>
+<span class="hljs-keyword">let</span> iterable = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-number">1</span>], [<span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-number">2</span>], [<span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-number">3</span>]]);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> entry <span class="hljs-keyword">of</span> iterable) &#123;
+    <span class="hljs-built_in">console</span>.log(entry);
+&#125;
+<span class="hljs-comment">// logs [&quot;a&quot;, 1]</span>
+<span class="hljs-comment">// logs [&quot;b&quot;, 2]</span>
+<span class="hljs-comment">// logs [&quot;c&quot;, 3]</span>
+
+<span class="hljs-comment">//  迭代map获取键值</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> [key, value] <span class="hljs-keyword">of</span> iterable) &#123;
+    <span class="hljs-built_in">console</span>.log(key)
+    <span class="hljs-built_in">console</span>.log(value);
+&#125;
+
+
+<span class="hljs-comment">// 迭代set</span>
+<span class="hljs-keyword">let</span> iterable = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>,<span class="hljs-number">4</span>]);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> value <span class="hljs-keyword">of</span> iterable) &#123;
+    <span class="hljs-built_in">console</span>.log(value);
+&#125;
+<span class="hljs-comment">// logs 1</span>
+<span class="hljs-comment">// logs 2</span>
+<span class="hljs-comment">// logs 3</span>
+<span class="hljs-comment">// logs 4</span>
+
+<span class="hljs-comment">// 迭代 DOM 节点</span>
+<span class="hljs-keyword">let</span> articleParagraphs = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">&#x27;.article &gt; p&#x27;</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> paragraph <span class="hljs-keyword">of</span> articleParagraphs) &#123;
+    paragraph.classList.add(<span class="hljs-string">&quot;paragraph&quot;</span>);
+    <span class="hljs-comment">// 给class名为“article”节点下的 p 标签添加一个名为“paragraph” class属性。</span>
+&#125;
+
+<span class="hljs-comment">// 迭代arguments类数组对象</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> argument <span class="hljs-keyword">of</span> <span class="hljs-built_in">arguments</span>) &#123;
+    <span class="hljs-built_in">console</span>.log(argument);
+  &#125;
+&#125;)(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);
+<span class="hljs-comment">// logs：</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span>
+
+
+<span class="hljs-comment">// 迭代类型数组</span>
+<span class="hljs-keyword">let</span> typeArr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>([<span class="hljs-number">0x00</span>, <span class="hljs-number">0xff</span>]);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> value <span class="hljs-keyword">of</span> typeArr) &#123;
+  <span class="hljs-built_in">console</span>.log(value);
+&#125;
+<span class="hljs-comment">// logs：</span>
+<span class="hljs-comment">// 0</span>
+<span class="hljs-comment">// 255</span></code></pre></div>
+
+<p>经过第一轮的自我介绍和技能展示后，我们了解到:</p>
+<ul>
+<li><code>for语句</code>是最原始的循环语句。定义一个变量<code>i</code>(数字类型，表示数组的下标), 按照一定的条件，对<code>i</code>进行循环累加。条件通常为循环对象的长度，当超过长度就停止循环。因为对象无法判断长度，所以搭配<code>Object.keys()</code>使用。</li>
+<li><code>forEach</code> ES5 提出。自称是<code>for语句</code>的加强版，可以发现它比<code>for语句</code>在写法上简单了很多。但是本质上也是数组的循环。<code>forEach</code>每个数组元素执行一次 callback 函数。也就是调用它的数组，因此，不会改变原数组。返回值是<code>undefine</code>。</li>
+<li><code>map</code> ES5 提出。给原数组中的每个元素都按顺序调用一次 callback 函数。生成一个新数组，不修改调用它的原数组本身。返回值是新的数组。</li>
+<li><code>for...in</code> ES5 提出。遍历对象上的可枚举属性，包括原型对象上的属性，且按任意顺序进行遍历，也就是顺序不固定。遍历数组时把数组的下标当作键值，此时的 i 是个字符串型的。它是为遍历对象属性而构建的，不建议与数组一起使用。</li>
+<li><code>for...of</code> ES6 提出。只遍历可迭代对象的数据。</li>
+</ul>
+<h2 id="能力甄别"><a href="#能力甄别" class="headerlink" title="能力甄别"></a>能力甄别</h2><p>作为一个程序员，仅仅认识他们是远远不够的，在实际开发中鉴别他们各自的优缺点。因地制宜的使用他们，扬长避短。从而提高程序的整体性能才是能力之所在。</p>
+<h3 id="关于跳出循环体"><a href="#关于跳出循环体" class="headerlink" title="关于跳出循环体"></a>关于跳出循环体</h3><p>在循环中满足一定条件就跳出循环体，或者跳过不符合条件的数据继续循环其它数据。是经常会遇到的需求。常用的语句是<code>break</code> 与 <code>continue</code>。</p>
+<p>简单的说一下二者的区别，就当复习好了。</p>
+<ul>
+<li><code>break</code>语句是跳出当前循环，并执行当前循环之后的语句；</li>
+<li><code>continue</code>语句是终止当前循环，并继续执行下一次循环;</li>
+</ul>
+<p><strong>注意</strong>：<code>forEach</code> 与<code>map</code> 是不支持跳出循环体的，其它三种方法均支持。</p>
+<p><strong>原理</strong> ：查看<code>forEach</code>实现原理，就会理解这个问题。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-built_in">Array</span>.prototype.forEach(callbackfn)</code></pre></div>
+
+<p>传入的 function 是这里的回调函数。在回调函数里面使用 break 肯定是非法的，因为 break 只能用于跳出循环，回调函数不是循环体。</p>
+<p>在回调函数中使用 return，只是将结果返回到上级函数，也就是这个 for 循环中，并没有结束 for 循环，所以 return 也是无效的。</p>
+<p><code>map()</code> 同理。</p>
+<h3 id="map-链式调用"><a href="#map-链式调用" class="headerlink" title="map()链式调用"></a><code>map()</code>链式调用</h3><p><code>map()</code> 方法是可以链式调用的，这意味着它可以方便的结合其它方法一起使用。例如：<code>reduce()</code>, <code>sort()</code>, <code>filter()</code> 等。但是其它方法并不能做到这一点。<code>forEach()</code>的返回值是<code>undefined</code>，所以无法链式调用。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// 将元素乘以本身，再进行求和。</span>
+<span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];
+<span class="hljs-keyword">let</span> res1 = arr.map(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item * item).reduce(<span class="hljs-function">(<span class="hljs-params">total, value</span>) =&gt;</span> total + value);
+
+<span class="hljs-built_in">console</span>.log(res1) <span class="hljs-comment">// logs 55 undefined&quot;</span></code></pre></div>
+
+<h3 id="for-in会遍历出原型对象上的属性"><a href="#for-in会遍历出原型对象上的属性" class="headerlink" title="for...in会遍历出原型对象上的属性"></a><code>for...in</code>会遍历出原型对象上的属性</h3><div class="hljs"><pre><code class="hljs js"><span class="hljs-built_in">Object</span>.prototype.objCustom = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;&#125;;
+<span class="hljs-built_in">Array</span>.prototype.arrCustom = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;&#125;;
+<span class="hljs-keyword">var</span> arr = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>];
+arr.foo = <span class="hljs-string">&#x27;hello&#x27;</span>;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> arr) &#123;
+    <span class="hljs-built_in">console</span>.log(i);
+&#125;
+<span class="hljs-comment">// logs</span>
+<span class="hljs-comment">// 0</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// foo</span>
+<span class="hljs-comment">// arrCustom</span>
+<span class="hljs-comment">// objCustom</span></code></pre></div>
+
+<p>然而在实际的开发中，我们并不需要原型对象上的属性。这种情况下我们可以使用<code>hasOwnProperty()</code> 方法，它会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）。如下：</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-built_in">Object</span>.prototype.objCustom = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;&#125;;
+<span class="hljs-built_in">Array</span>.prototype.arrCustom = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;&#125;;
+<span class="hljs-keyword">var</span> arr = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>];
+arr.foo = <span class="hljs-string">&#x27;hello&#x27;</span>;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> arr) &#123;
+    <span class="hljs-keyword">if</span> (arr.hasOwnProperty(i)) &#123;
+        <span class="hljs-built_in">console</span>.log(i);
+    &#125;
+&#125;
+<span class="hljs-comment">// logs</span>
+<span class="hljs-comment">// 0</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// foo</span>
+
+<span class="hljs-comment">// 可见数组本身的属性还是无法摆脱。此时建议使用 forEach</span></code></pre></div>
+
+<p>对于纯对象的遍历，选择<code>for..in</code>枚举更方便；对于数组遍历，如果不需要知道索引<code>for..of</code>迭代更合适，因为还可以中断；如果需要知道索引，则<code>forEach()</code>更合适；对于其他字符串，类数组，类型数组的迭代，<code>for..of</code>更占上风更胜一筹。但是注意低版本浏览器的是配性。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>有兴趣的读者可以找一组数据自行测试，文章就直接给出结果了，并做相应的解释。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-string">&#x27;for &gt; for-of &gt; forEach  &gt; map &gt; for-in&#x27;</span></code></pre></div>
+
+<ul>
+<li><code>for</code> 循环当然是最简单的，因为它没有任何额外的函数调用栈和上下文；</li>
+<li><code>for...of</code>只要具有 Iterator 接口的数据结构，都可以使用它迭代成员。它直接读取的是键值。</li>
+<li><code>forEach</code>，因为它其实比我们想象得要复杂一些，它实际上是<code>array.forEach(function(currentValue, index, arr), thisValue)</code>它不是普通的 for 循环的语法糖，还有诸多参数和上下文需要在执行的时候考虑进来，这里可能拖慢性能；</li>
+<li><code>map()</code> 最慢，因为它的返回值是一个等长的全新的数组，数组创建和赋值产生的性能开销很大。</li>
+<li><code>for...in</code>需要穷举对象的所有属性，包括自定义的添加的属性也能遍历到。且<code>for...in</code>的 key 是<code>String</code>类型，有转换过程，开销比较大。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在实际开发中我们要结合语义话、可读性和程序性能，去选择究竟使用哪种方案。</p>
+<p>如果你需要将数组按照某种规则映射为另一个数组，就应该用 map。</p>
+<p>如果你需要进行简单的遍历，用 forEach 或者 for of。</p>
+<p>如果你需要对迭代器进行遍历，用 for of。</p>
+<p>如果你需要过滤出符合条件的项，用 filter。</p>
+<p>如果你需要先按照规则映射为新数组，再根据条件过滤，那就用一个 map 加一个 filter。</p>
+<p>总之，因地制宜，因时而变。千万不要因为过分追求性能，而忽略了语义和可读性。在实际开发中，让他们扬长避短，优势互补，让程序趋近最优才是我们要做的。</p>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://juejin.im/post/5ee6e7c4f265da76e46e6bb7">https://juejin.im/post/5ee6e7c4f265da76e46e6bb7</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/24/vue/Vue%E6%9C%80%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue最全知识点，面试必备</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/24/webapck/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/">
+                        <span class="hidden-mobile">webpack动态懒加载</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  
+<script src="/custom/custom.js"></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "for循环全家桶&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>

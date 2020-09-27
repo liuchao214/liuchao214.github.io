@@ -17,7 +17,7 @@
   <meta name="description" content="个人的成长经历">
   <meta name="author" content="Chaos L">
   <meta name="keywords" content="前端成长笔记">
-  <title>RainbowSort [要求 Tc: O(n) Sc:O(1)] - Chaos Blog</title>
+  <title>RainbowSort - Chaos Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -181,7 +181,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      367 字
+      434 字
     </span>
   
 
@@ -191,7 +191,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      5
        分钟
     </span>
   
@@ -221,11 +221,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">RainbowSort [要求 Tc: O(n) Sc:O(1)]</h1>
+            <h1 style="display: none">RainbowSort</h1>
             
             <div class="markdown-body" id="post-body">
-              <p>给定一系列球，其中球的颜色只能是红色，黄色或蓝色，对球进行排序，以使所有红色球都分组在左侧，所有黄色球都分组在中间，所有蓝色球分组在右侧。</p>
-<p>例：</p>
+              <p>给定一系列球，其中球的颜色只能是红色，黄色或蓝色，对球进行排序，以使所有红色球都分组在左侧，所有黄色球都分组在中间，所有蓝色球分组在右侧。<br>[要求 Tc: O(n) Sc:O(1)]<br>例：</p>
 <blockquote>
 <p>[红] 被排序为 [红]</p>
 </blockquote>
@@ -245,12 +244,13 @@
 <p><strong>思路:</strong> 本题思路是挡板思想, 使用三个挡板四个区域的思想进行划分 (交换数组元素位置)</p>
 <p><strong>挡板的物理意义: [0-i) 全是红色,[i,j) 之间为黄色,(k-&gt;n-1] 全为蓝色，[j-k] 为未知探索区域</strong></p>
 <p>j 为快指针</p>
-<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> input = [<span class="hljs-string">&#x27;黄&#x27;</span>,<span class="hljs-string">&#x27;红&#x27;</span>,<span class="hljs-string">&#x27;红&#x27;</span>,<span class="hljs-string">&#x27;蓝&#x27;</span>,<span class="hljs-string">&#x27;黄&#x27;</span>,<span class="hljs-string">&#x27;红&#x27;</span>,<span class="hljs-string">&#x27;蓝&#x27;</span>]
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> input = [<span class="hljs-string">&#x27;黄&#x27;</span>, <span class="hljs-string">&#x27;红&#x27;</span>, <span class="hljs-string">&#x27;红&#x27;</span>, <span class="hljs-string">&#x27;蓝&#x27;</span>, <span class="hljs-string">&#x27;黄&#x27;</span>, <span class="hljs-string">&#x27;红&#x27;</span>, <span class="hljs-string">&#x27;蓝&#x27;</span>];
+
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rainbowSort</span>(<span class="hljs-params">rainbow</span>) </span>&#123;
     <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, k = rainbow.length - <span class="hljs-number">1</span>;
     <span class="hljs-keyword">while</span> (j &lt;= k) &#123;
         <span class="hljs-keyword">if</span> (rainbow[j] === <span class="hljs-string">&#x27;红&#x27;</span>) &#123;
-            swap(rainbow,i,j);
+            swap(rainbow, i, j);
             i++;
             j++;
         &#125;
@@ -263,13 +263,29 @@
         &#125;
     &#125;
 &#125;
+
 <span class="hljs-comment">//辅助交换函数</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">swap</span>(<span class="hljs-params">arr,i,j</span>) </span>&#123;
-    [arr[i],arr[j]] = [arr[j],arr[i]]
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">swap</span>(<span class="hljs-params">arr, i, j</span>) </span>&#123;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
 &#125;
-rainbowSort(input);
-<span class="hljs-built_in">console</span>.log(input);
-</code></pre></div>
+
+rainbowSort(input);</code></pre></div>
+
+<p>利用sort：</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> input = [<span class="hljs-string">&#x27;黄&#x27;</span>, <span class="hljs-string">&#x27;红&#x27;</span>, <span class="hljs-string">&#x27;红&#x27;</span>, <span class="hljs-string">&#x27;蓝&#x27;</span>, <span class="hljs-string">&#x27;黄&#x27;</span>, <span class="hljs-string">&#x27;红&#x27;</span>, <span class="hljs-string">&#x27;蓝&#x27;</span>];
+<span class="hljs-keyword">const</span> enums = &#123;
+    <span class="hljs-string">&#x27;红&#x27;</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">&#x27;黄&#x27;</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-string">&#x27;蓝&#x27;</span>: <span class="hljs-number">3</span>
+&#125;;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rainbowSort</span>(<span class="hljs-params">rainbow</span>) </span>&#123;
+    <span class="hljs-keyword">return</span> rainbow.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> &#123;
+        <span class="hljs-keyword">return</span> enums[a] - enums[b];
+    &#125;);
+&#125;
+
+rainbowSort(input);</code></pre></div>
 
             </div>
             <hr>
@@ -420,6 +436,10 @@ rainbowSort(input);
 
 
 
+  
+<script src="/custom/custom.js"></script>
+
+
 
 
   <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
@@ -454,7 +474,7 @@ rainbowSort(input);
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "RainbowSort [要求 Tc: O(n) Sc:O(1)]&nbsp;",
+        "RainbowSort&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

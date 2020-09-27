@@ -179,23 +179,29 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2017/06/25/webapck/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" target="_self">
-          <img src="/images/webpack.jpeg" srcset="/img/loading.gif" alt="webpack相关问题">
+        <a href="/2019/01/16/write-code%20/%E5%AE%9E%E7%8E%B0Promise%E3%80%81Promise.all/" target="_self">
+          <img src="/images/code.png" srcset="/img/loading.gif" alt="实现Promise、Promise.all">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
-        <a href="/2017/06/25/webapck/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">webpack相关问题</a>
+        <a href="/2019/01/16/write-code%20/%E5%AE%9E%E7%8E%B0Promise%E3%80%81Promise.all/">实现Promise、Promise.all</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2017/06/25/webapck/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+        <a href="/2019/01/16/write-code%20/%E5%AE%9E%E7%8E%B0Promise%E3%80%81Promise.all/">
           
           
             
           
-          随着现代前端开发的复杂度和规模越来越庞大，已经不能抛开工程化来独立开发了，如 react 的 jsx 代码必须编译后才能在浏览器中使用；又如 sass 和 less 的代码浏览器也是不支持的。 而如果摒弃了这些开发框架，那么开发的效率将大幅下降。在众多前端工程化工具中，webpack 脱颖而出成为了当今最流行的前端构建工具。 然而大多数的使用者都只是单纯的会使用，而并不知道其深层的原理。希望通过以
+          实现Promiseconst PENDING = &#x27;pending&#x27;;
+const FULFILLED = &#x27;fulfilled&#x27;;
+const REJECTED = &#x27;rejected&#x27;;
+
+const NewPromise = function(executor) &#123;
+  const _this = this;
+  _thi
         </a>
       </p>
 
@@ -203,8 +209,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2017-06-25 15:03" pubdate>
-              2017-06-25
+            <time datetime="2019-01-16 19:08" pubdate>
+              2019-01-16
             </time>
           </div>
         
@@ -212,7 +218,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+              <a href="/categories/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/">手撕代码</a>
             
           </div>
         
@@ -220,7 +226,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/webpack/">webpack</a>
+              <a href="/tags/JavaScript/">JavaScript</a>
             
           </div>
         
@@ -232,27 +238,28 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2017/05/07/algorithm/twoSum/" target="_self">
-          <img src="/images/algorithm.jpg" srcset="/img/loading.gif" alt="twoSum [要求 Tc: O(n) Sc:O(n)]">
+        <a href="/2018/11/27/algorithm/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACK%E4%B8%AA%E7%BB%93%E7%82%B9/" target="_self">
+          <img src="/images/algorithm.jpg" srcset="/img/loading.gif" alt="删除链表的倒数第K个结点">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
-        <a href="/2017/05/07/algorithm/twoSum/">twoSum [要求 Tc: O(n) Sc:O(n)]</a>
+        <a href="/2018/11/27/algorithm/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACK%E4%B8%AA%E7%BB%93%E7%82%B9/">删除链表的倒数第K个结点</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2017/05/07/algorithm/twoSum/">
+        <a href="/2018/11/27/algorithm/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACK%E4%B8%AA%E7%BB%93%E7%82%B9/">
           
           
             
           
-          LeetCode 第 1 题
-按照题目要求, 我们第一时间想到的会是两层循环暴力解法：
-解法1: Time = O(n²), Space = O(1)思路: 遍历每个元素 nums[j]，并查找是否存在一个值与 target - nums[j] 相等的目标元素。
-function twoSum(nums, target) &#123;
-     for (let i = 0; i &lt; num
+          删除链表的倒数第 K 个结点 [要求 Tc: O(L) Sc:O(1)]
+LeetCode 第 19 题
+基本解法var removeNthFromEnd = function(head, n) &#123;
+    const findNode = (node, n, tempNode, level = 0) =&gt; &#123;
+        if (node.next) &#123;
+
         </a>
       </p>
 
@@ -260,8 +267,8 @@ function twoSum(nums, target) &#123;
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2017-05-07 14:04" pubdate>
-              2017-05-07
+            <time datetime="2018-11-27 15:52" pubdate>
+              2018-11-27
             </time>
           </div>
         
@@ -287,11 +294,504 @@ function twoSum(nums, target) &#123;
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/09/25/write-code%20/%E5%AE%9E%E7%8E%B0call%E3%80%81apply/" target="_self">
+          <img src="/images/code.png" srcset="/img/loading.gif" alt="实现call、apply">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/09/25/write-code%20/%E5%AE%9E%E7%8E%B0call%E3%80%81apply/">实现call、apply</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/09/25/write-code%20/%E5%AE%9E%E7%8E%B0call%E3%80%81apply/">
+          
+          
+            
+          
+          实现callFunction.prototype.mycall = function () &#123;
+    let [thisArg, ...args] = [...arguments];
+    thisArg = Object(thisArg) || window;
+    let fn = Symbol();
+    thisArg[fn] = this;
+    let result
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-09-25 11:00" pubdate>
+              2018-09-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/">手撕代码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/06/01/vue/VueRouter/" target="_self">
+          <img src="/images/Vue-cta.jpg" srcset="/img/loading.gif" alt="VueRouter">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/06/01/vue/VueRouter/">VueRouter</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/06/01/vue/VueRouter/">
+          
+          
+            
+          
+          路由模式
+hash
+history
+
+hash带＃
+history需要server支持
+动态路由const User = &#123;
+    template:&#x27;&lt;div&gt;&#123;&#123;$route.params.id&#125;&#125;&lt;/div&gt;&#x27;
+&#125;
+const router = new VueRouter(&#123;
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-06-01 21:30" pubdate>
+              2018-06-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%A1%86%E6%9E%B6%E3%80%81%E5%BA%93%E5%AD%A6%E4%B9%A0/">框架、库学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vue/">Vue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/03/20/algorithm/%E5%90%88%E5%B9%B6%E8%BF%9E%E7%BB%AD%E6%95%B0%E5%AD%97/" target="_self">
+          <img src="/images/algorithm.jpg" srcset="/img/loading.gif" alt="合并连续数字">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/03/20/algorithm/%E5%90%88%E5%B9%B6%E8%BF%9E%E7%BB%AD%E6%95%B0%E5%AD%97/">合并连续数字</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/03/20/algorithm/%E5%90%88%E5%B9%B6%E8%BF%9E%E7%BB%AD%E6%95%B0%E5%AD%97/">
+          
+          
+            
+          
+          
+题目描述:
+
+
+输入:[0, 2, 3, 5, 6, 7, 8, 9, 11, 13, 56, 57]
+
+
+输出结果：
+
+
+0,2-3,5-9,11,13,56-57
+
+思路: 三指针, 同向而行, slow 左边的为处理好的元素, f 指针快速向前走, begin 指针记录区间开始区间, prev 指针记录区间结束位置。
+function combine(arr) &#123;
+    let
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-03-20 17:43" pubdate>
+              2018-03-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E9%80%BB%E8%BE%91/">算法与逻辑</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/03/19/algorithm/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%85%A8%E6%8E%92%E5%88%97/" target="_self">
+          <img src="/images/algorithm.jpg" srcset="/img/loading.gif" alt="字符串全排列">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/03/19/algorithm/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%85%A8%E6%8E%92%E5%88%97/">字符串全排列</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/03/19/algorithm/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%85%A8%E6%8E%92%E5%88%97/">
+          
+          
+            
+          
+          字符串全排列 [要求 Tc: O(n!) Sc:O(n²)]剑指 Offer 第 38 题
+var permutation = function(s) &#123;
+    let solution = [];
+    if (s.length === 0) &#123;
+        return solution;
+    &#125;
+    permutationHelper(s, so
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-03-19 22:30" pubdate>
+              2018-03-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E9%80%BB%E8%BE%91/">算法与逻辑</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/03/19/algorithm/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%8A%A0/" target="_self">
+          <img src="/images/algorithm.jpg" srcset="/img/loading.gif" alt="字符串相加">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/03/19/algorithm/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%8A%A0/">字符串相加</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/03/19/algorithm/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%8A%A0/">
+          
+          
+            
+          
+          LeetCode 第 415 题
+var addStrings = function(num1, num2) &#123;
+    let res = [];
+    let i = num1.length - 1, j = num2.length - 1, carry = 0;
+    while (i &gt;= 0 || j &gt;= 0) &#123;
+        let n1 = 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-03-19 21:02" pubdate>
+              2018-03-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E9%80%BB%E8%BE%91/">算法与逻辑</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/03/11/vue/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/" target="_self">
+          <img src="/images/Vue-cta.jpg" srcset="/img/loading.gif" alt="Vue组件渲染过程">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/03/11/vue/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/">Vue组件渲染过程</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/03/11/vue/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/">
+          
+          
+            
+          
+          初次渲染过程
+解析模版为render函数（编译打包时已经完成，开发环境下完成）（vue-loader）
+触发响应式，监听data属性，getter setter
+执行render函数，生成vnode，patch（elem,vnode）
+
+更新过程
+修改data，触发setter（此前在getter中已经被监听）
+重新执行render函数，生成newVnode
+patch(vnode,newVnod
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-03-11 13:58" pubdate>
+              2018-03-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%A1%86%E6%9E%B6%E3%80%81%E5%BA%93%E5%AD%A6%E4%B9%A0/">框架、库学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vue/">Vue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/02/28/vue/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/" target="_self">
+          <img src="/images/Vue-cta.jpg" srcset="/img/loading.gif" alt="Vue模板编译">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/02/28/vue/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/">Vue模板编译</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/02/28/vue/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/">
+          
+          
+            
+          
+          模版编译
+模版是vue开发中最常用的部分，即与使用相关的原理
+不是html，有指令等
+组件渲染和更新的过程
+
+js的with语法
+改变{}内自由变量的查找规则，当作obj的属性来查找
+如果找不到匹配的属性，则报错
+with慎用，打破了作用域的规则，易读性差
+
+vue template complier将模版编译为render函数const compiler = require(&#x27;vue-
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-02-28 13:57" pubdate>
+              2018-02-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%A1%86%E6%9E%B6%E3%80%81%E5%BA%93%E5%AD%A6%E4%B9%A0/">框架、库学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vue/">Vue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2018/02/16/vue/Vue%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81/" target="_self">
+          <img src="/images/Vue-cta.jpg" srcset="/img/loading.gif" alt="Vue的数据劫持">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2018/02/16/vue/Vue%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81/">Vue的数据劫持</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/02/16/vue/Vue%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81/">
+          
+          
+            
+          
+          Object.defineProperty(obj, prop, desc)核心的API
+监听对象（简单）const data = &#123;&#125;
+const name = &#x27;zhangsan&#x27;
+Object.defineProperty(data, &#x27;name&#x27; ,&#123;
+    get: function()&#123;
+        
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-02-16 23:50" pubdate>
+              2018-02-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%A1%86%E6%9E%B6%E3%80%81%E5%BA%93%E5%AD%A6%E4%B9%A0/">框架、库学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vue/">Vue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
@@ -385,6 +885,10 @@ function twoSum(nums, target) &#123;
 
 
 
+
+
+  
+<script src="/custom/custom.js"></script>
 
 
 

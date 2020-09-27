@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>webpack动态懒加载 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163323.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-24 18:23" pubdate>
+        2020年4月24日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">webpack动态懒加载</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>起因是因为一个基于 vue-cli3.0 的项目突然反馈 vendor 包过大，为了减少用户的白屏时间开始做优化。</p>
+<a id="more"></a>
+<hr>
+<h4 id="webpack4-的-splitChunk-插件"><a href="#webpack4-的-splitChunk-插件" class="headerlink" title="webpack4 的 splitChunk 插件"></a>webpack4 的 splitChunk 插件</h4><p>用过 vue-cli3.0 的同学应该熟悉，其舍弃了以前常用的 build 文件夹下的<code>webpack.config.js</code>文件配置，配置内容全部放到<code>vue.config.js</code>文件中，实际上关于 webpack 的配置其实和之前大同小异。打包拆分不得不聊到常用的<code>CommonsChunkPlugin</code>。</p>
+<p>旧项目常用的方式就是通过<code>webpack.optimize.CommonsChunkPlugin(opts)</code>，加载该插件进行代码分割。但是其存在很多问题：</p>
+<ul>
+<li>它可能导致下载更多的超过我们使用的代码</li>
+<li>它在异步 chunks 中是低效的</li>
+<li>配置繁琐，很难使用</li>
+<li>难以被理解</li>
+</ul>
+<p>在 webpack4 抛弃了<code>CommonsChunkPlugin</code>，换成了更先进的<code>SplitChunksPlugin</code>。它们的区别就在于，<code>CommonChunksPlugin</code> 会找到多数模块中都共有的东西，并且把它提取出来（common.js），也就意味着如果你加载了 common.js，那么里面可能会存在一些当前模块不需要的东西。</p>
+<p>而 <code>SplitChunksPlugin</code> 采用了完全不同的 heuristics 方法，它会根据模块之间的依赖关系，自动打包出很多很多（而不是单个）通用模块，可以保证加载进来的代码一定是会被依赖到的。</p>
+<p>下面是一个简单的例子，假设我们有 4 个 chunk，分别依赖了以下模块：</p>
+<p><img src="/images/pages/webplan1.png" srcset="/img/loading.gif" alt="image"></p>
+<p>根据<code>CommonChunksPlugin</code>的默认配置，会打包成：  </p>
+<p><img src="/images/pages/webplan2.png" srcset="/img/loading.gif" alt="image"></p>
+<p>而<code>SplitChunksPlugin</code>会打包成：  </p>
+<p><img src="/images/pages/webplan3.png" srcset="/img/loading.gif" alt="image"></p>
+<p>显然进一步优化了空间。</p>
+<p>当然这不是本次讨论的重点，因为 vue-cli3.0 默认情况下已经是使用了<code>SplitChunksPlugin</code>的配置，查看 vue-cli service config 文件夹下的 app.js，有一段链式的 webpackConfig 配置了最终打包的 chunks 配置。</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">if</span> (isProd &amp;&amp; !process.env.CYPRESS_ENV) &#123;
+  webpackConfig
+    .optimization.splitChunks(&#123;
+      cacheGroups: &#123;
+        vendors: &#123;
+          name: <span class="hljs-string">`chunk-vendors`</span>,
+          test: <span class="hljs-regexp">/[\\/]node_modules[\\/]/</span>,
+          priority: <span class="hljs-number">-10</span>,
+          chunks: <span class="hljs-string">&#x27;initial&#x27;</span>
+        &#125;,
+        common: &#123;
+          name: <span class="hljs-string">`chunk-common`</span>,
+          minChunks: <span class="hljs-number">2</span>,
+          priority: <span class="hljs-number">-20</span>,
+          chunks: <span class="hljs-string">&#x27;initial&#x27;</span>,
+          reuseExistingChunk: <span class="hljs-literal">true</span>
+        &#125;
+      &#125;
+    &#125;)
+&#125;</code></pre></div>
+
+<p>通常该默认情况可以满足大部分应用场景，但是考虑我们项目的特殊性，我需要额外提高<code>chunk-vendors</code>的 minChunks 项，让一些偶尔出现但是频率没有太高的依赖滚出 vendors。</p>
+<hr>
+<h4 id="动态懒加载"><a href="#动态懒加载" class="headerlink" title="动态懒加载"></a>动态懒加载</h4><p>先来聊聊 import 和 require 的区别。<br>require/exports 出生在野生规范当中，什么叫做野生规范？即这些规范是 JavaScript 社区中的开发者自己草拟的规则，得到了大家的承认或者广泛的应用。比如 CommonJS、AMD、CMD 等等。<br>import/export 则是名门正派。TC39 制定的新的 ECMAScript 版本，即 ES6（ES2015）中包含进来。</p>
+<p><code>const PAGE_A = require.ensure([], () =&gt; &#123;require(&quot;a&quot;)&#125;</code>。早期写 vue-router，习惯以这种形式去完成异步加载。后续日常开发中，常用的就是 import from 来引入资源（千万避免全局引入 ui 组件，可能会导致资源包异常的大）webpack 官方就指出，应该用 import 来代替<code>require.ensure</code></p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">determineDate</span>(<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;moment&#x27;</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">moment</span>) </span>&#123;
+    <span class="hljs-built_in">console</span>.log(moment().format());
+  &#125;).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>&#123;
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Failed to load moment&#x27;</span>, err);
+  &#125;);
+&#125;
+
+<span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./component&#x27;</span>).then(<span class="hljs-function"><span class="hljs-params">Component</span> =&gt;</span> &#123;
+    <span class="hljs-comment">// ....</span>
+&#125;);
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">determineDate</span>(<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-keyword">const</span> moment = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;moment&#x27;</span>);
+  <span class="hljs-keyword">return</span> moment().format(<span class="hljs-string">&#x27;LLLL&#x27;</span>);
+&#125;
+determineDate().then(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(str));</code></pre></div>
+
+<p>相比较而言，import 使用了 promise 的封装，只接受一个参数，就是引用包的地址，语法十分简单。</p>
+<p>由于 webpack 需要将所有 import() 的模块都进行单独打包，所以在工程打包阶段，webpack 会进行依赖收集。webpack 会找到所有 import() 的调用，将传入的参数处理成一个正则，如：</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// import(&#x27;./app&#x27;+path+&#x27;/util&#x27;) =&gt; /^\.\/app.*\/util$/</span></code></pre></div>
+
+<p>也就是说，import 参数中的所有变量，都会被替换为【.*】，而 webpack 就根据这个正则，查找所有符合条件的包，将其作为 package 进行打包。<br>所以 import 的正确姿势，应该是<strong>尽可能静态化表达包所处的路径，最小化变量控制的区域。</strong><br>如我们要引用一堆页面组件，可以使用<code>import(&#39;./pages/&#39;+ComponentName)</code>，这样就可以实现引用的封装，同时也避免打包多余的内容。但是 webpack 会保证该路径下所有可能引入的文件是可用的，即会预请求。</p>
+<p>官方指出，在 import 内部添加注释，可以完成 chunkname 命名、打包模式等功能。4.6 + 还支持 Prefetching/Preloading 来提前加载 / 预加载资源。（prefetch 用于未来会发生的场合，preload 用于当前场合）</p>
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">import</span>(
+  
+  
+  <span class="hljs-string">&#x27;module&#x27;</span>
+);
+
+<span class="hljs-keyword">import</span>(
+  
+  
+  
+  
+  
+  
+  <span class="hljs-string">`./locale/<span class="hljs-subst">$&#123;language&#125;</span>`</span>
+);</code></pre></div>
+
+<p>的确是可以完美取代 require 了</p>
+<hr>
+<h4 id="分析结果"><a href="#分析结果" class="headerlink" title="分析结果"></a>分析结果</h4><p>借助<code>webpack-bundle-analyzer</code>，可以清晰的查看，打包后之后项目的文件大小以及其构成。对于做性能优化有很大的帮助。具体使用方法不再详述，建议直接移步<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.npmjs.com/package/webpack-bundle-analyzer">官方文档</a>。</p>
+<hr>
+<h4 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h4><p>其实大部分是关于 webpack 的使用方式。老的 require.ensure 也好，新的 import 也好，其实本质还是交给 webpack 去打包处理，在最后选择如何去引入。<br>重要的是 webpack 的配置，即便用了 vue-cli3.0 依然要考虑自定义配置如何去完成，再细化一点就是 import 的引入方式。</p>
+<hr>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://juejin.im/post/5af1677c6fb9a07ab508dabb">一步一步的了解 webpack4 的 splitChunk 插件</a><br><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.zhihu.com/question/56820346">require 和 import 的区别</a><br><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://segmentfault.com/a/1190000015648036">webpack import() 动态加载模块踩坑</a><br><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.npmjs.com/package/webpack-bundle-analyzer">webpack-bundle-analyzer</a></p>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/54015bf76047">https://www.jianshu.com/p/54015bf76047</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/webpack/">webpack</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/06/15/basic/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">for循环全家桶</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/17/webapck/webpack%E9%85%8D%E7%BD%AE%E5%B0%8F%E8%AE%B0/">
+                        <span class="hidden-mobile">webpack相关问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  
+<script src="/custom/custom.js"></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "webpack动态懒加载&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>

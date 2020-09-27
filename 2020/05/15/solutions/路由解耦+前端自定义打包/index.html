@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>Vue路由解耦+前端自定义打包 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-05-15 22:13" pubdate>
+        2020年5月15日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Vue路由解耦+前端自定义打包</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>背景1：同事吐槽vue-router的路由文件维护困难，随着工程越来越大，增减模块费劲。路由文件过大（几千行）。新同事接手难如登天<br>背景2：虽然我们是SPA的项目架构，但是由于是toB业务，后端同学是提供的微服务，可以根据客户的需求<del>买不买得起</del>，而决定为客户部署什么服务。希望前端又同样的能力（<del>别想什么iframe/权限控制，一句多的代码都不想给甲方</del>）</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>webpack提供递归文件夹的能力，轻松解决第一个问题<br>在路由解耦的基础上，通过配置文件，加载不同的router文件。导致webpack组装的依赖不同，达到自定义打包的目的。</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="路由解耦："><a href="#路由解耦：" class="headerlink" title="路由解耦："></a>路由解耦：</h3><div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">// 读取路由文件，缓存在this.routerList中。</span>
+<span class="hljs-keyword">const</span> routerFiles = <span class="hljs-built_in">require</span>.context(
+    process.env.NODE_ENV === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;@/bundle-temp&#x27;</span> : <span class="hljs-string">&#x27;@/views&#x27;</span>,<span class="hljs-literal">true</span>, <span class="hljs-regexp">/\.router.js$/</span>);
+routerFiles.keys().forEach(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> &#123;
+    <span class="hljs-built_in">this</span>.routerList.push(routerFiles(item).default);
+&#125;);
+<span class="hljs-comment">// 动态增加页面路由</span>
+<span class="hljs-built_in">this</span>.router.addRoutes(
+    [...formatRouters(), &#123;<span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;*&#x27;</span>, <span class="hljs-attr">redirect</span>: &#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;404&#x27;</span>&#125;&#125;]
+);
+<span class="hljs-comment">// 路由重复加载处理</span>
+<span class="hljs-keyword">const</span> routerPush = VueRouter.prototype.push;
+VueRouter.prototype.push = <span class="hljs-function">(<span class="hljs-params">location</span>) =&gt;</span> &#123;
+    <span class="hljs-keyword">return</span> routerPush.call(<span class="hljs-built_in">this</span>.router, location)
+    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error);
+&#125;;
+<span class="hljs-keyword">const</span> routerReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = <span class="hljs-function">(<span class="hljs-params">location</span>) =&gt;</span> &#123;
+    <span class="hljs-keyword">return</span> routerReplace.call(<span class="hljs-built_in">this</span>.router, location)
+    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error);
+&#125;;
+<span class="hljs-comment">// 格式化路由配置项</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">formatRouters</span>(<span class="hljs-params"></span>) </span>&#123;
+    <span class="hljs-keyword">const</span> result = [];
+    <span class="hljs-comment">// 按照路由sort从小到大排序，默认sort为0</span>
+    <span class="hljs-built_in">this</span>.routerList.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Number</span>(a.sort || <span class="hljs-number">0</span>) - <span class="hljs-built_in">Number</span>(b.sort || <span class="hljs-number">0</span>) &gt; <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>;
+    &#125;);
+    <span class="hljs-built_in">this</span>.routerList.forEach(<span class="hljs-function">(<span class="hljs-params">router</span>) =&gt;</span> &#123;
+        <span class="hljs-comment">// 如果没有parentName添加到根路由中</span>
+        <span class="hljs-keyword">if</span> (!router.parentName) &#123;
+            <span class="hljs-keyword">const</span> hasChildren = <span class="hljs-built_in">this</span>.routerList.some(
+                (item) =&gt; item.parentName === router.name);
+            <span class="hljs-keyword">if</span> (hasChildren) &#123;
+                <span class="hljs-comment">// 有子路由则增加children</span>
+                <span class="hljs-built_in">Object</span>.defineProperty(router, <span class="hljs-string">&#x27;children&#x27;</span>, &#123;
+                    value: [],
+                    writable: <span class="hljs-literal">true</span>
+                &#125;);
+                <span class="hljs-built_in">this</span>.formatChildrenRouters(router.children, router);
+            &#125;
+            store.commit(<span class="hljs-string">&#x27;addRouterConfig&#x27;</span>, router);
+            result.push(router);
+        &#125;
+    &#125;);
+    <span class="hljs-keyword">return</span> result;
+&#125;</code></pre></div>
+
+<h3 id="自定义打包："><a href="#自定义打包：" class="headerlink" title="自定义打包："></a>自定义打包：</h3><ol>
+<li>配置package.json<div class="hljs"><pre><code class="hljs 1c"><span class="hljs-string">&quot;serve&quot;</span>: <span class="hljs-string">&quot;npm run lint&amp;&amp;vue-cli-service serve&quot;</span>,
+<span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;BUILD_TYPE=all node scripts/bundle/bundle-builder.js&quot;</span>,
+<span class="hljs-string">&quot;lint&quot;</span>: <span class="hljs-string">&quot;vue-cli-service lint&quot;</span>,
+<span class="hljs-string">&quot;mock&quot;</span>: <span class="hljs-string">&quot;feMock --dir=mock --port=10195&quot;</span>,
+<span class="hljs-string">&quot;bundle&quot;</span>: <span class="hljs-string">&quot;npm run lint&amp;&amp;vue-cli-service build&quot;</span></code></pre></div></li>
+<li>编写打包node脚本<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);
+<span class="hljs-keyword">const</span> targetPath = path.resolve(<span class="hljs-string">&#x27;./src/bundle-temp&#x27;</span>);
+<span class="hljs-keyword">const</span> devRouterPath = path.resolve(<span class="hljs-string">&#x27;./src/views&#x27;</span>);
+<span class="hljs-keyword">const</span> spawn = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>).spawn;
+<span class="hljs-keyword">const</span> buildType = process.env.BUILD_TYPE;
+<span class="hljs-keyword">const</span> routerReg = <span class="hljs-regexp">/\.router.js$/</span>;
+<span class="hljs-comment">// 基础路由，</span>
+<span class="hljs-keyword">const</span> defaultRouter = [
+    <span class="hljs-string">&#x27;main.router.js&#x27;</span>,
+    <span class="hljs-string">&#x27;login.router.js&#x27;</span>,
+    <span class="hljs-string">&#x27;404.router.js&#x27;</span>
+];
+<span class="hljs-keyword">let</span> routerConfig = <span class="hljs-literal">null</span>;
+
+<span class="hljs-keyword">if</span> (buildType &amp;&amp; buildType !== <span class="hljs-string">&#x27;all&#x27;</span>) &#123;
+    <span class="hljs-comment">// 根据type读取对应路由配置</span>
+    <span class="hljs-keyword">const</span> customRouter = fs.readFileSync(<span class="hljs-string">`./scripts/bundle/<span class="hljs-subst">$&#123;buildType&#125;</span>.json`</span>);
+    routerConfig = defaultRouter.concat(<span class="hljs-built_in">JSON</span>.parse(customRouter));
+&#125;
+
+fs.exists(targetPath, <span class="hljs-function">(<span class="hljs-params">exists</span>) =&gt;</span> &#123;
+    <span class="hljs-keyword">if</span> (exists) &#123;
+        <span class="hljs-keyword">const</span> oldPaths = fs.readdirSync(targetPath);
+        oldPaths.forEach(<span class="hljs-function">(<span class="hljs-params">file</span>) =&gt;</span> &#123;
+            <span class="hljs-keyword">const</span> curPath = <span class="hljs-string">`<span class="hljs-subst">$&#123;targetPath&#125;</span>/<span class="hljs-subst">$&#123;file&#125;</span>`</span>;
+            <span class="hljs-comment">// 删除文件</span>
+            fs.unlinkSync(curPath);
+        &#125;);
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        fs.mkdirSync(targetPath);
+    &#125;
+    getAllRouters(devRouterPath, routerConfig);
+    <span class="hljs-comment">// 运行npm脚本并输出执行结果到控制台</span>
+    <span class="hljs-built_in">console</span>.time();
+    <span class="hljs-keyword">const</span> handler = spawn(<span class="hljs-string">&#x27;npm&#x27;</span>, [<span class="hljs-string">&#x27;run&#x27;</span>, <span class="hljs-string">&#x27;bundle&#x27;</span>]);
+    handler.stdout.on(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> &#123;
+        <span class="hljs-built_in">console</span>.log(data.toString());
+    &#125;);
+    handler.stderr.on(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> &#123;
+        <span class="hljs-built_in">console</span>.log(data.toString());
+    &#125;);
+    handler.on(<span class="hljs-string">&#x27;close&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> &#123;
+        delFile(targetPath);
+        <span class="hljs-built_in">console</span>.timeEnd();
+    &#125;);
+&#125;);
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * 获取所有路由配置</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;*&#125;</span> </span>dirPath 目标文件夹地址</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;*&#125;</span> </span>config 可选参数，路由配置数组,如果不传则打包全部路由</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAllRouters</span>(<span class="hljs-params">dirPath, config</span>) </span>&#123;
+    <span class="hljs-keyword">const</span> viewsPaths = fs.readdirSync(dirPath);
+    <span class="hljs-keyword">if</span> (viewsPaths &amp;&amp; viewsPaths.length) &#123;
+        viewsPaths.forEach(<span class="hljs-function">(<span class="hljs-params">filename</span>) =&gt;</span> &#123;
+            <span class="hljs-keyword">const</span> pathname = path.join(dirPath, filename);
+            <span class="hljs-keyword">const</span> fileInfo = fs.statSync(pathname);
+            <span class="hljs-keyword">if</span> (fileInfo.isDirectory()) &#123;
+                getAllRouters(pathname, config);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (fileInfo.isFile()) &#123;
+                <span class="hljs-keyword">const</span> isRouter = routerReg.test(filename);
+                <span class="hljs-keyword">if</span> (isRouter) &#123;
+                    <span class="hljs-keyword">const</span> routerName = filename.replace(routerReg, <span class="hljs-string">&#x27;&#x27;</span>);
+                    <span class="hljs-keyword">if</span> (!config || config.indexOf(routerName) &gt; <span class="hljs-number">-1</span>) &#123;
+                        <span class="hljs-keyword">const</span> target = <span class="hljs-string">`<span class="hljs-subst">$&#123;targetPath&#125;</span>/<span class="hljs-subst">$&#123;filename&#125;</span>`</span>;
+                        fs.writeFileSync(target, fs.readFileSync(pathname));
+                    &#125;
+                &#125;
+            &#125;
+        &#125;);
+    &#125;
+&#125;</code></pre></div></li>
+<li>指定不同环境下指定不同的获取路由文件的目录：<div class="hljs"><pre><code class="hljs ini"><span class="hljs-attr">process.env.NODE_ENV</span> === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;@/bundle-temp&#x27;</span> : <span class="hljs-string">&#x27;@/views&#x27;</span>,</code></pre></div></li>
+<li>编写配置文件，根据配置文件生成打包文件目录<div class="hljs"><pre><code class="hljs json">[
+    <span class="hljs-string">&quot;example&quot;</span>,
+    <span class="hljs-string">&quot;grid-example&quot;</span>,
+    <span class="hljs-string">&quot;echarts-example&quot;</span>,
+    <span class="hljs-string">&quot;example-canvas&quot;</span>,
+    <span class="hljs-string">&quot;example-no-group&quot;</span>,
+    <span class="hljs-string">&quot;draw-area-example&quot;</span>,
+    <span class="hljs-string">&quot;flow-chart&quot;</span>
+]</code></pre></div></li>
+<li>webpack根据路由文件组装依赖</li>
+<li>打包完成后删除临时文件夹<div class="hljs"><pre><code class="hljs js"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * 构建完成后删除临时文件夹</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;*&#125;</span> </span>path 必传参数可以是文件夹可以是文件</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delFile</span>(<span class="hljs-params">path</span>) </span>&#123;
+    <span class="hljs-keyword">if</span> (fs.existsSync(path)) &#123;
+        <span class="hljs-keyword">if</span> (fs.statSync(path).isDirectory()) &#123;
+            <span class="hljs-keyword">let</span> files = fs.readdirSync(path);
+            files.forEach(<span class="hljs-function">(<span class="hljs-params">file, index</span>) =&gt;</span> &#123;
+                <span class="hljs-keyword">let</span> currentPath = path + <span class="hljs-string">&#x27;/&#x27;</span> + file;
+                <span class="hljs-keyword">if</span> (fs.statSync(currentPath).isDirectory()) &#123;
+                    delFile(currentPath);
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    fs.unlinkSync(currentPath);
+                &#125;
+            &#125;);
+            fs.rmdirSync(path);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            fs.unlinkSync(path);
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%B7%A5%E4%BD%9C%E6%9D%82%E8%AE%B0/">工作杂记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Vue/">Vue</a>
+                    
+                      <a class="hover-with-bg" href="/tags/webpack/">webpack</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/06/15/basic/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">for循环全家桶</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/24/webapck/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/">
+                        <span class="hidden-mobile">webpack动态懒加载</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  
+<script src="/custom/custom.js"></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Vue路由解耦+前端自定义打包&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>

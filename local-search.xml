@@ -54,6 +54,35 @@
   
   
   <entry>
+    <title>Vue路由解耦+前端自定义打包</title>
+    <link href="/2020/05/15/solutions/%E8%B7%AF%E7%94%B1%E8%A7%A3%E8%80%A6+%E5%89%8D%E7%AB%AF%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%93%E5%8C%85/"/>
+    <url>/2020/05/15/solutions/%E8%B7%AF%E7%94%B1%E8%A7%A3%E8%80%A6+%E5%89%8D%E7%AB%AF%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%93%E5%8C%85/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>背景1：同事吐槽vue-router的路由文件维护困难，随着工程越来越大，增减模块费劲。路由文件过大（几千行）。新同事接手难如登天<br>背景2：虽然我们是SPA的项目架构，但是由于是toB业务，后端同学是提供的微服务，可以根据客户的需求<del>买不买得起</del>，而决定为客户部署什么服务。希望前端又同样的能力（<del>别想什么iframe/权限控制，一句多的代码都不想给甲方</del>）</p></blockquote><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote><p>webpack提供递归文件夹的能力，轻松解决第一个问题<br>在路由解耦的基础上，通过配置文件，加载不同的router文件。导致webpack组装的依赖不同，达到自定义打包的目的。</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="路由解耦："><a href="#路由解耦：" class="headerlink" title="路由解耦："></a>路由解耦：</h3><pre><code class="hljs js"><span class="hljs-comment">// 读取路由文件，缓存在this.routerList中。</span><span class="hljs-keyword">const</span> routerFiles = <span class="hljs-built_in">require</span>.context(    process.env.NODE_ENV === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;@/bundle-temp&#x27;</span> : <span class="hljs-string">&#x27;@/views&#x27;</span>,<span class="hljs-literal">true</span>, <span class="hljs-regexp">/\.router.js$/</span>);routerFiles.keys().forEach(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> &#123;    <span class="hljs-built_in">this</span>.routerList.push(routerFiles(item).default);&#125;);<span class="hljs-comment">// 动态增加页面路由</span><span class="hljs-built_in">this</span>.router.addRoutes(    [...formatRouters(), &#123;<span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;*&#x27;</span>, <span class="hljs-attr">redirect</span>: &#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;404&#x27;</span>&#125;&#125;]);<span class="hljs-comment">// 路由重复加载处理</span><span class="hljs-keyword">const</span> routerPush = VueRouter.prototype.push;VueRouter.prototype.push = <span class="hljs-function">(<span class="hljs-params">location</span>) =&gt;</span> &#123;    <span class="hljs-keyword">return</span> routerPush.call(<span class="hljs-built_in">this</span>.router, location)    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error);&#125;;<span class="hljs-keyword">const</span> routerReplace = VueRouter.prototype.replace;VueRouter.prototype.replace = <span class="hljs-function">(<span class="hljs-params">location</span>) =&gt;</span> &#123;    <span class="hljs-keyword">return</span> routerReplace.call(<span class="hljs-built_in">this</span>.router, location)    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error);&#125;;<span class="hljs-comment">// 格式化路由配置项</span><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">formatRouters</span>(<span class="hljs-params"></span>) </span>&#123;    <span class="hljs-keyword">const</span> result = [];    <span class="hljs-comment">// 按照路由sort从小到大排序，默认sort为0</span>    <span class="hljs-built_in">this</span>.routerList.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> &#123;        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Number</span>(a.sort || <span class="hljs-number">0</span>) - <span class="hljs-built_in">Number</span>(b.sort || <span class="hljs-number">0</span>) &gt; <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>;    &#125;);    <span class="hljs-built_in">this</span>.routerList.forEach(<span class="hljs-function">(<span class="hljs-params">router</span>) =&gt;</span> &#123;        <span class="hljs-comment">// 如果没有parentName添加到根路由中</span>        <span class="hljs-keyword">if</span> (!router.parentName) &#123;            <span class="hljs-keyword">const</span> hasChildren = <span class="hljs-built_in">this</span>.routerList.some(                (item) =&gt; item.parentName === router.name);            <span class="hljs-keyword">if</span> (hasChildren) &#123;                <span class="hljs-comment">// 有子路由则增加children</span>                <span class="hljs-built_in">Object</span>.defineProperty(router, <span class="hljs-string">&#x27;children&#x27;</span>, &#123;                    value: [],                    writable: <span class="hljs-literal">true</span>                &#125;);                <span class="hljs-built_in">this</span>.formatChildrenRouters(router.children, router);            &#125;            store.commit(<span class="hljs-string">&#x27;addRouterConfig&#x27;</span>, router);            result.push(router);        &#125;    &#125;);    <span class="hljs-keyword">return</span> result;&#125;</code></pre><h3 id="自定义打包："><a href="#自定义打包：" class="headerlink" title="自定义打包："></a>自定义打包：</h3><ol><li>配置package.json<pre><code class="hljs 1c"><span class="hljs-string">&quot;serve&quot;</span>: <span class="hljs-string">&quot;npm run lint&amp;&amp;vue-cli-service serve&quot;</span>,<span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;BUILD_TYPE=all node scripts/bundle/bundle-builder.js&quot;</span>,<span class="hljs-string">&quot;lint&quot;</span>: <span class="hljs-string">&quot;vue-cli-service lint&quot;</span>,<span class="hljs-string">&quot;mock&quot;</span>: <span class="hljs-string">&quot;feMock --dir=mock --port=10195&quot;</span>,<span class="hljs-string">&quot;bundle&quot;</span>: <span class="hljs-string">&quot;npm run lint&amp;&amp;vue-cli-service build&quot;</span></code></pre></li><li>编写打包node脚本<pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<span class="hljs-keyword">const</span> targetPath = path.resolve(<span class="hljs-string">&#x27;./src/bundle-temp&#x27;</span>);<span class="hljs-keyword">const</span> devRouterPath = path.resolve(<span class="hljs-string">&#x27;./src/views&#x27;</span>);<span class="hljs-keyword">const</span> spawn = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>).spawn;<span class="hljs-keyword">const</span> buildType = process.env.BUILD_TYPE;<span class="hljs-keyword">const</span> routerReg = <span class="hljs-regexp">/\.router.js$/</span>;<span class="hljs-comment">// 基础路由，</span><span class="hljs-keyword">const</span> defaultRouter = [    <span class="hljs-string">&#x27;main.router.js&#x27;</span>,    <span class="hljs-string">&#x27;login.router.js&#x27;</span>,    <span class="hljs-string">&#x27;404.router.js&#x27;</span>];<span class="hljs-keyword">let</span> routerConfig = <span class="hljs-literal">null</span>;<span class="hljs-keyword">if</span> (buildType &amp;&amp; buildType !== <span class="hljs-string">&#x27;all&#x27;</span>) &#123;    <span class="hljs-comment">// 根据type读取对应路由配置</span>    <span class="hljs-keyword">const</span> customRouter = fs.readFileSync(<span class="hljs-string">`./scripts/bundle/<span class="hljs-subst">$&#123;buildType&#125;</span>.json`</span>);    routerConfig = defaultRouter.concat(<span class="hljs-built_in">JSON</span>.parse(customRouter));&#125;fs.exists(targetPath, <span class="hljs-function">(<span class="hljs-params">exists</span>) =&gt;</span> &#123;    <span class="hljs-keyword">if</span> (exists) &#123;        <span class="hljs-keyword">const</span> oldPaths = fs.readdirSync(targetPath);        oldPaths.forEach(<span class="hljs-function">(<span class="hljs-params">file</span>) =&gt;</span> &#123;            <span class="hljs-keyword">const</span> curPath = <span class="hljs-string">`<span class="hljs-subst">$&#123;targetPath&#125;</span>/<span class="hljs-subst">$&#123;file&#125;</span>`</span>;            <span class="hljs-comment">// 删除文件</span>            fs.unlinkSync(curPath);        &#125;);    &#125; <span class="hljs-keyword">else</span> &#123;        fs.mkdirSync(targetPath);    &#125;    getAllRouters(devRouterPath, routerConfig);    <span class="hljs-comment">// 运行npm脚本并输出执行结果到控制台</span>    <span class="hljs-built_in">console</span>.time();    <span class="hljs-keyword">const</span> handler = spawn(<span class="hljs-string">&#x27;npm&#x27;</span>, [<span class="hljs-string">&#x27;run&#x27;</span>, <span class="hljs-string">&#x27;bundle&#x27;</span>]);    handler.stdout.on(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> &#123;        <span class="hljs-built_in">console</span>.log(data.toString());    &#125;);    handler.stderr.on(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> &#123;        <span class="hljs-built_in">console</span>.log(data.toString());    &#125;);    handler.on(<span class="hljs-string">&#x27;close&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> &#123;        delFile(targetPath);        <span class="hljs-built_in">console</span>.timeEnd();    &#125;);&#125;);<span class="hljs-comment">/**</span><span class="hljs-comment"> * 获取所有路由配置</span><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;*&#125;</span> </span>dirPath 目标文件夹地址</span><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;*&#125;</span> </span>config 可选参数，路由配置数组,如果不传则打包全部路由</span><span class="hljs-comment"> */</span><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAllRouters</span>(<span class="hljs-params">dirPath, config</span>) </span>&#123;    <span class="hljs-keyword">const</span> viewsPaths = fs.readdirSync(dirPath);    <span class="hljs-keyword">if</span> (viewsPaths &amp;&amp; viewsPaths.length) &#123;        viewsPaths.forEach(<span class="hljs-function">(<span class="hljs-params">filename</span>) =&gt;</span> &#123;            <span class="hljs-keyword">const</span> pathname = path.join(dirPath, filename);            <span class="hljs-keyword">const</span> fileInfo = fs.statSync(pathname);            <span class="hljs-keyword">if</span> (fileInfo.isDirectory()) &#123;                getAllRouters(pathname, config);            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (fileInfo.isFile()) &#123;                <span class="hljs-keyword">const</span> isRouter = routerReg.test(filename);                <span class="hljs-keyword">if</span> (isRouter) &#123;                    <span class="hljs-keyword">const</span> routerName = filename.replace(routerReg, <span class="hljs-string">&#x27;&#x27;</span>);                    <span class="hljs-keyword">if</span> (!config || config.indexOf(routerName) &gt; <span class="hljs-number">-1</span>) &#123;                        <span class="hljs-keyword">const</span> target = <span class="hljs-string">`<span class="hljs-subst">$&#123;targetPath&#125;</span>/<span class="hljs-subst">$&#123;filename&#125;</span>`</span>;                        fs.writeFileSync(target, fs.readFileSync(pathname));                    &#125;                &#125;            &#125;        &#125;);    &#125;&#125;</code></pre></li><li>指定不同环境下指定不同的获取路由文件的目录：<pre><code class="hljs ini"><span class="hljs-attr">process.env.NODE_ENV</span> === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;@/bundle-temp&#x27;</span> : <span class="hljs-string">&#x27;@/views&#x27;</span>,</code></pre></li><li>编写配置文件，根据配置文件生成打包文件目录<pre><code class="hljs json">[    <span class="hljs-string">&quot;example&quot;</span>,    <span class="hljs-string">&quot;grid-example&quot;</span>,    <span class="hljs-string">&quot;echarts-example&quot;</span>,    <span class="hljs-string">&quot;example-canvas&quot;</span>,    <span class="hljs-string">&quot;example-no-group&quot;</span>,    <span class="hljs-string">&quot;draw-area-example&quot;</span>,    <span class="hljs-string">&quot;flow-chart&quot;</span>]</code></pre></li><li>webpack根据路由文件组装依赖</li><li>打包完成后删除临时文件夹<pre><code class="hljs js"><span class="hljs-comment">/**</span><span class="hljs-comment"> * 构建完成后删除临时文件夹</span><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;*&#125;</span> </span>path 必传参数可以是文件夹可以是文件</span><span class="hljs-comment"> */</span><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delFile</span>(<span class="hljs-params">path</span>) </span>&#123;    <span class="hljs-keyword">if</span> (fs.existsSync(path)) &#123;        <span class="hljs-keyword">if</span> (fs.statSync(path).isDirectory()) &#123;            <span class="hljs-keyword">let</span> files = fs.readdirSync(path);            files.forEach(<span class="hljs-function">(<span class="hljs-params">file, index</span>) =&gt;</span> &#123;                <span class="hljs-keyword">let</span> currentPath = path + <span class="hljs-string">&#x27;/&#x27;</span> + file;                <span class="hljs-keyword">if</span> (fs.statSync(currentPath).isDirectory()) &#123;                    delFile(currentPath);                &#125; <span class="hljs-keyword">else</span> &#123;                    fs.unlinkSync(currentPath);                &#125;            &#125;);            fs.rmdirSync(path);        &#125; <span class="hljs-keyword">else</span> &#123;            fs.unlinkSync(path);        &#125;    &#125;&#125;</code></pre></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>工作杂记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JavaScript</tag>
+      
+      <tag>Vue</tag>
+      
+      <tag>webpack</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>webpack动态懒加载</title>
     <link href="/2020/04/24/webapck/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/"/>
     <url>/2020/04/24/webapck/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/</url>
@@ -147,9 +176,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -249,9 +278,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -301,9 +330,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -378,9 +407,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -405,9 +434,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -432,9 +461,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -534,9 +563,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -611,9 +640,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -713,9 +742,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     

@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="个人的成长经历">
+  <meta name="author" content="Chaos L">
+  <meta name="keywords" content="前端成长笔记">
+  <title>DOM事件流 - Chaos Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/custom/custom_style.css">
+
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chaos Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                汇总
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                简介
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/images/20191231163322.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-06-12 14:08" pubdate>
+        2017年6月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">DOM事件流</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="什么是事件？"><a href="#什么是事件？" class="headerlink" title="什么是事件？"></a>什么是事件？</h2><blockquote>
+<p>事件, 就是文档或浏览器窗口发生的一些特定的交互瞬间. JavaScript 和 HTML 之间的交互是通过事件实现的. 可以使用事件监听器来监听事件, 以便事件发生时执行相应的代码.</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="事件流是什么？"><a href="#事件流是什么？" class="headerlink" title="事件流是什么？"></a>事件流是什么？</h2><p>当在页面上某个元素触发特定事件时, 比如点击, 除了被点击的目标元素, 所有祖先元素都会触发该事件, 一直到 window.</p>
+<p>那这样就出现了一个问题, 是先在目标元素上触发事件, 还是先在祖先元素上触发呢? 这就是事件流的概念.</p>
+<p><strong>事件流是事件在目标元素和祖先元素间的触发顺序</strong></p>
+<ul>
+<li><strong>捕获</strong>- Capture - 事件由最顶层逐级向下传播, 直至到达目标元素.</li>
+<li><strong>冒泡</strong> - Bubble - 顾名思义, 类似水中冒泡, 从下往上. 事件由第一个被触发的元素接收, 然后逐级向上传播.</li>
+</ul>
+<p>后来 w3c 采用折中的方式, 规定先捕获再冒泡平息了战火. 如此一个事件就被分成了三个阶段(是的, 不光是捕获和冒泡):</p>
+<ol>
+<li>捕获阶段 - The capture phase - 事件从最顶层元素 window 一直传递到目标元素的父元素.</li>
+<li>目标阶段 - The target phase - 事件到达目标元素. 如果事件指定不冒泡. 那就会在这里中止.</li>
+<li>冒泡阶段 - The bubble phase - 事件从目标元素父元素向上逐级传递直到最顶层元素 window. 及捕获阶段的反方向.</li>
+</ol>
+<p>那这里又有一个新的疑问, 既然捕获和冒泡阶段都会触发事件, 那先捕获再冒泡, 岂不是路径上的元素都会触发两次事件?</p>
+<p>在 DOM2 中, 事件监听机制提供了一个参数来决定事件是在捕获阶段生效还是在冒泡阶段生效, 接下来简要学习下 ==addEventListener== .</p>
+<h2 id="addEventListener"><a href="#addEventListener" class="headerlink" title="addEventListener"></a>addEventListener</h2><p><strong>EventTarget.addEventListener()</strong> 方法将指定的监听器注册到目标元素上, 当该对象触发指定的事件时, 指定的回调函数就会被执行. 事件目标可以是一个文档上的元素或任何其他支持事件的对象 (比如 XMLHttpRequest).</p>
+<p>它的工作原理是将实现EventListener的函数或对象添加到调用它的 EventTarget 上的指定事件类型的事件侦听器列表中.</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><div class="hljs"><pre><code class="hljs reasonml">target.add<span class="hljs-constructor">EventListener(<span class="hljs-params">type</span>, <span class="hljs-params">listener</span>[, <span class="hljs-params">options</span>])</span>;
+target.add<span class="hljs-constructor">EventListener(<span class="hljs-params">type</span>, <span class="hljs-params">listener</span>[, <span class="hljs-params">useCapture</span>])</span>;
+target.add<span class="hljs-constructor">EventListener(<span class="hljs-params">type</span>, <span class="hljs-params">listener</span>[, <span class="hljs-params">useCapture</span>, <span class="hljs-params">wantsUntrusted</span>  ])</span>;  <span class="hljs-comment">// Gecko/Mozilla only</span></code></pre></div>
+<ul>
+<li>type: 表示监听事件类型的字符串. 事件列表.</li>
+<li>listener: 当所监听的事件类型触发时的回调. 会接收到一个事件通知对象.</li>
+<li>options: 可选. 可用的选项如下:</li>
+<li>capture: Boolean, 如果是 true, 表示 listener 会在捕获阶段触发. 默认是 false. 冒泡捕获. 所以微软牛逼.</li>
+<li>once: Boolean, 如果是 true, 表示 listener 在添加之后最多只调用一次.</li>
+<li>passive: Boolean，如果是, 表示 listener 永远不会调用 preventDefault(). 如果 listener 仍然调用了这个函数, 客户端将会忽略它并抛出一个控制台警告.</li>
+<li>useCapture: 可选. Boolean, 同 options - capture</li>
+</ul>
+<blockquote>
+<p>注意: 对于目标元素上的事件监听器来说, 事件会处于目标阶段, 而不是冒泡阶段或者捕获阶段. 在目标阶段的事件会触发该元素上的所有监听器, 而不在乎这个监听器到底在注册时 useCapture 是 true 还是 false.</p>
+</blockquote>
+<h2 id="事件监听添加与移除"><a href="#事件监听添加与移除" class="headerlink" title="事件监听添加与移除"></a>事件监听添加与移除</h2><h3 id="事件添加的三种方式"><a href="#事件添加的三种方式" class="headerlink" title="事件添加的三种方式"></a>事件添加的三种方式</h3><ol>
+<li><p>通过HTML 属性的方式</p>
+<div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(&#x27;click&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre></div>
+</li>
+<li><p>DOM0 中可以通过js脚本来给指定元素提供事件处理函数，即</p>
+<div class="hljs"><pre><code class="hljs awk">element.onclick = <span class="hljs-keyword">function</span> <span class="hljs-regexp">//</span> 只会在冒泡阶段生效</code></pre></div>
+</li>
+<li><p>DOM2 中, 添加了新的事件监听API, 即<code>addEventListener</code>, 同时提供了取消监听的 <code>removeEventListener(type, handler[, options | useCapture])</code>. 显然事件处理函数注册后, 要取消监听, <code>type/hanlder/useCapture</code>的一致.</p>
+</li>
+</ol>
+<p>相比第一, 第二种, <code>addEventListener</code>的方式有以下几点优势:</p>
+<ul>
+<li>可以为同一个事件注册多个回调函数, 依次触发. 而 DOM0 的方式则会被覆盖掉. 只能添加一种</li>
+<li>使用 DOM0 会覆盖 HTML 的方式.</li>
+<li>可以通过参数决定监听是在冒泡阶段生效还是在捕获阶段生效.</li>
+<li><code>element.onclick</code> 注册的监听只会在冒泡阶段生效</li>
+</ul>
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;child&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(&#x27;html&#x27;)&quot;</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre></div>
+
+<div class="hljs"><pre><code class="hljs js"><span class="hljs-keyword">const</span> child = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;child&#x27;</span>) 
+
+child.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;DOM0A&#x27;</span>) &#125; <span class="hljs-comment">// 覆盖了 HTML 的方式</span>
+child.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;DOM0B&#x27;</span>) &#125; <span class="hljs-comment">// 覆盖了上一条 DOM0A   </span>
+
+child.addEventLisnter(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;lisnterA&#x27;</span>) &#125;)
+child.addEventLisnter(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;lisnterB&#x27;</span>) &#125;) <span class="hljs-comment">// 不会覆盖</span></code></pre></div>
+<h5 id="三种方式对应的如何移除"><a href="#三种方式对应的如何移除" class="headerlink" title="三种方式对应的如何移除:"></a>三种方式对应的如何移除:</h5><div class="hljs"><pre><code class="hljs js">child.setAttributer(<span class="hljs-string">&#x27;onclick&#x27;</span>, <span class="hljs-literal">false</span>)
+child.onclick = <span class="hljs-literal">null</span>
+child.removeEventLisnter(<span class="hljs-string">&#x27;设置相同的参数&#x27;</span>)</code></pre></div>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
+<li><p>以下代码的输出顺序</p>
+<div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(&#x27;html&#x27;)&quot;</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Test<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span>
+<span class="javascript">        <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span>
+<span class="javascript">            <span class="hljs-keyword">const</span> parent = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;parent&quot;</span>);</span>
+<span class="javascript">            <span class="hljs-keyword">const</span> child = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;child&quot;</span>);</span>
+
+<span class="javascript">            child.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;child onclick&#x27;</span>) &#125;;</span>
+
+<span class="javascript">            <span class="hljs-comment">// capture 默认为 false, 冒泡</span></span>
+<span class="javascript">            parent.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;parent event&#x27;</span>) &#125;);</span>
+<span class="javascript">            child.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;child event&#x27;</span>) &#125;);</span>
+
+<span class="javascript">            <span class="hljs-comment">// 捕获</span></span>
+<span class="javascript">            parent.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;parent event capture&#x27;</span>) &#125;, &#123; <span class="hljs-attr">capture</span>: <span class="hljs-literal">true</span> &#125;);</span>
+<span class="javascript">            child.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;child event capture&#x27;</span>) &#125;, &#123; <span class="hljs-attr">capture</span>: <span class="hljs-literal">true</span> &#125;);</span>
+        &#125;
+<span class="javascript">        <span class="hljs-built_in">window</span>.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span>
+<span class="javascript">            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;window&#x27;</span>);</span>
+        &#125;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(&#x27;body&#x27;)&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;parent&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(&#x27;parent html&#x27;)&quot;</span>&gt;</span>parent
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;child&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(&#x27;child html&#x27;)&quot;</span>&gt;</span>child<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre></div>
+</li>
+<li><p>什么是事件流，同一个事件有几个阶段？</p>
+</li>
+<li><p>如何移除通过HTML属性、element.onclick等注册的事件处理函数？</p>
+<h2 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h2><h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3></li>
+</ol>
+<p>首先参考 chrome 浏览器的结果. 先来看点击 child, 输出:  </p>
+<ol>
+<li>parent html</li>
+<li>parent event</li>
+<li>parent event capture</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>奇怪! 这时候不是应该先捕获, capture 在前吗? 别急, 这时候如果调换 parent event 与 parent event capture 的 addEventListener 顺序, 会发现, 输出顺序也变了:</p>
+<ol>
+<li>parent html</li>
+<li><strong>parent event capture</strong></li>
+<li><strong>parent event</strong></li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>其实这时候的输出顺序只和 <code>addEventListener</code> 的顺序有关. 是否开启 <code>capture</code> 无关. 因为我们是直接点击了 <code>parent</code>. 对于 <code>parent</code> 自身而言. 它在整个点击传递过程中处于目标阶段. 并不涉及捕获和冒泡. 同时我们也发现. html 设置的点击是优先于 <code>addEventListener</code> 的方式的.</p>
+<p>我们再来看下点击 child:</p>
+<ol>
+<li>parent event capture</li>
+<li>hild onclick</li>
+<li>child event</li>
+<li>child event capture</li>
+<li>parent html</li>
+<li>parent event</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>首先, child html 没有输出, 因为被 child onclick 覆盖掉了.</p>
+<p>第二点, child onclick 的优先级也是高于 <code>addEventListener</code> 的.</p>
+<p>再然后, 点击事件传递过程中, 首先在捕获阶段, 输出了 parent event capture. 然后到达目标阶段. 同理之前点击 parent. 如果此时调换 child event 与 child event capture 的 <code>addEventListener</code> 顺序. 输出顺序也会改变</p>
+<p>最后, 到达冒泡阶段, 由于 html 的优先级高于 <code>addEventListener</code>. 所以被输出. (别忘了, 默认都是开启冒泡)</p>
+<p>但是. 如果使用 Safari 浏览器, 则会发现, 点击 parent, 输出:</p>
+<ol>
+<li>parent event capture</li>
+<li>parent html</li>
+<li>parent event</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>点击 child, 输出:</p>
+<ol>
+<li>parent event capture</li>
+<li>child event capture</li>
+<li>child onclick</li>
+<li>child event</li>
+<li>parent html</li>
+<li>parent event</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>会发现, 对于捕获阶段的处理不一样了. 点击目标元素时, 目标元素不仅处于目标阶段, 也处于捕获阶段的终点和冒泡阶段的起点. 所以会进行 <code>capture</code> 的判断. 所以在代码编写时这里要尤为注意.</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6512139d1d9e">原文地址</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/html/">html</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/06/24/basic/%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">原型链</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/05/07/algorithm/twoSum/">
+                        <span class="hidden-mobile">twoSum</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  
+<script src="/custom/custom.js"></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "DOM事件流&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>
